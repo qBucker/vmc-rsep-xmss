@@ -1,0 +1,13 @@
+[package]
+name = "wf-audit"
+version = "0.1.0"
+edition = "2021"
+description = "Winterfell STARK 审计链演示 — VMC/RSEP-XMSS PQ 外壳对冲轨（工程演示参数）"
+
+[dependencies]
+winterfell = { version = "0.13.1", default-features = false, features = ["std", "concurrent"] }
+winter-utils = "0.13"
+blake2 = "0.10"
+
+[profile.release]
+opt-level = 3

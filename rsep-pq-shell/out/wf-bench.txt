@@ -1,0 +1,10 @@
+Winterfell STARK audit-chain demo (engineering parameters, not a secure parameter set)
+statement: C_t = P([C_{t-1}, B_t, DS])[0], T = 32 blocks, Poseidon-f64 (t=3, alpha=7, 8F+57P)
+trace: 3 cols x 4096 rows; constraints: 7 (deg 7 base, cycles [128,128]); blowup 8
+options: 42 queries, grinding 16, quadratic extension, FRI fold 4, remainder 63, Linear batching
+C_T = 0x844ff2e16c353227
+trace_build_ms = 0.192
+prove_ms = 197.6
+verify_ms = 1.032
+proof_bytes = 57589
+verifier_gate = MinConjecturedSecurity(95) PASS

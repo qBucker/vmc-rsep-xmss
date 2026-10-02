@@ -1,0 +1,3 @@
+execute_ms=2056
+cycles=50865966
+segments=242

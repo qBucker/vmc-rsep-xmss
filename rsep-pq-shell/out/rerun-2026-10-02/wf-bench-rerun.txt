@@ -1,0 +1,41 @@
+# wf-audit rerun @ 2026-10-02T13:47:18+08:00 | kernel 6.6.87.2-microsoft-standard-WSL2 | rustc 1.98.1 | winterfell 0.13.1 (fresh resolve)
+--- run 1 ---
+C_T = 0x844ff2e16c353227 (trace 0.081 ms)
+prove   : 139.0 ms
+verify  : 0.577 ms
+proof   : 59382 bytes (58.0 KiB)
+verifier: MinConjecturedSecurity(95) 通过
+输出: out/wf-audit-proof.bin, out/wf-bench.txt
+size=59382 sha=396161c98060215c
+--- run 2 ---
+C_T = 0x844ff2e16c353227 (trace 0.081 ms)
+prove   : 124.1 ms
+verify  : 0.476 ms
+proof   : 58906 bytes (57.5 KiB)
+verifier: MinConjecturedSecurity(95) 通过
+输出: out/wf-audit-proof.bin, out/wf-bench.txt
+size=58906 sha=52f26ec68363bd01
+--- run 3 ---
+C_T = 0x844ff2e16c353227 (trace 0.073 ms)
+prove   : 123.7 ms
+verify  : 0.477 ms
+proof   : 59382 bytes (58.0 KiB)
+verifier: MinConjecturedSecurity(95) 通过
+输出: out/wf-audit-proof.bin, out/wf-bench.txt
+size=59382 sha=396161c98060215c
+--- run 4 ---
+C_T = 0x844ff2e16c353227 (trace 0.078 ms)
+prove   : 123.4 ms
+verify  : 0.471 ms
+proof   : 59382 bytes (58.0 KiB)
+verifier: MinConjecturedSecurity(95) 通过
+输出: out/wf-audit-proof.bin, out/wf-bench.txt
+size=59382 sha=396161c98060215c
+--- run 5 ---
+C_T = 0x844ff2e16c353227 (trace 0.073 ms)
+prove   : 128.4 ms
+verify  : 0.471 ms
+proof   : 57656 bytes (56.3 KiB)
+verifier: MinConjecturedSecurity(95) 通过
+输出: out/wf-audit-proof.bin, out/wf-bench.txt
+size=57656 sha=4f8bb6c856bca73e
