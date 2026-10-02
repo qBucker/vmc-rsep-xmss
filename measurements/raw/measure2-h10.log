@@ -1,0 +1,21 @@
+# rsep-xmss measure: h=10, iters=5, msg=0x77*32
+# prof=release; poseidon-domain=b"measure"; iso_reps=5
+setup_sign_iso_ms: min=280.140 med=289.882 max=295.078 (n=5)
+prove_sign_iso_ms: min=259.324 med=259.853 max=260.792 (n=5)
+verify_sign_iso_ms: min=0.847 med=0.891 max=0.980 (n=5)  # placeholder-satisfied=false
+keygen_ms: 104745.771
+vmhwm_after_keygen_kib: 30388
+xmss_sign_only_ms: 44.204
+finalize_prove_ms: 263.799
+finalize_verify_ms: 1.058
+proof_bytes: 128
+fin_proof_bytes: 128
+vk_bytes: 424
+xmss_sig_bytes: 2472
+rsep_sig_extra_bytes: 168  # pi + c + root'
+rsep_sig_total_bytes: 2640
+sign_ms: min=302.066 med=306.952 max=309.225 (n=5) [305.523, 306.952, 302.066, 309.173, 309.225]
+verify_e2e_ms: min=59.832 med=60.727 max=61.402 (n=5) [59.832, 60.223, 60.955, 60.727, 61.402]
+groth16_verify_ms: min=1.050 med=1.067 max=1.125 (n=5) [1.050, 1.052, 1.125, 1.102, 1.067]
+vmhwm_final_kib: 34996
+wall_total_ms: 109641.546

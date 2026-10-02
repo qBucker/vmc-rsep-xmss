@@ -1,0 +1,18 @@
+# rsep-xmss measure: h=10, iters=5
+# prof=release; poseidon-domain=b"measure"; msg=0x42*32
+setup_sign_iso_ms: 289.792
+prove_sign_iso_ms: 254.919
+verify_sign_iso_ms: 0.898  # placeholder-satisfied=false
+keygen_ms: 104388.184
+vmhwm_after_keygen_kib: 30436
+xmss_sign_only_ms: 20.112
+finalize_prove_ms: 264.820
+finalize_verify_ms: 1.088
+proof_bytes: 128
+fin_proof_bytes: 128
+vk_bytes: 424
+sign_ms: [280.447, 277.905, 280.140, 278.860, 281.535] mean=279.777
+verify_e2e_ms: [81.309, 80.939, 81.472, 81.874, 84.239] mean=81.967
+groth16_verify_ms: [1.049, 1.091, 1.056, 1.057, 1.083] mean=1.067
+vmhwm_final_kib: 34936
+wall_total_ms: 107035.300
