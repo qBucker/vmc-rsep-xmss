@@ -43,6 +43,19 @@ mean detection delay `E[tau | H1]` versus the design approximation
 `2h/mu1` (paper Table `tab:mc-delay`; the paper reports the `T = 10000`
 rows, where no censoring occurred).
 
+## Dual-signal experiment (`cusum_dual_mc.py`)
+
+Companion Monte Carlo for the correlated two-signal CUSUM frontier, added
+2026-10-02. Two standardized, $\rho$-correlated observations per commit;
+rules: `single` (baseline), `OR` (either triggers), `AND` (both by $T$).
+Grid: $\rho \in \{0, 0.5, 0.8, 0.95\}$, $h \in \{4..14\}$, $T = 10^4$,
+$N = 10^4$ streams per cell, seed `20260920`. Reference output:
+`dual-output-20261002.txt` (runtime ≈ 40 s). Key reading: at $T = 10^4$,
+reaching FAR $\le 1\%$ costs a mean delay of $26.2$ steps for a single
+signal vs $21.1$ steps with an OR rule at $\rho = 0$, eroding monotonically
+to $25.1$ steps at $\rho = 0.95$; an AND rule reaches the same target in
+$24.8$ steps at $\rho = 0$.
+
 ## Scope statement (honest boundary)
 
 This artifact covers the **statistical layer only**. The circuit constraint

@@ -14,7 +14,7 @@ MEM    ?= 4g
 H      ?= 10
 RUN     = $(DOCKER) run --rm --cpus=$(CPUS) --memory=$(MEM) -v "$(PWD)/out:/work/out" $(IMAGE)
 
-.PHONY: image test measure measure-all cusum wf-audit reproduce-all clean
+.PHONY: image test measure measure-all cusum cusum-dual wf-audit reproduce-all clean
 
 image:
 	$(DOCKER) build -t $(IMAGE) .
@@ -33,6 +33,10 @@ measure-all: image
 cusum: image
 	mkdir -p out
 	$(RUN) sh -c 'python3 statistics/cusum_mc.py > out/cusum-output.txt && python3 statistics/verify.py out/cusum-output.txt statistics/expected_output.txt'
+
+cusum-dual: image
+	mkdir -p out
+	$(RUN) sh -c 'python3 statistics/cusum_dual_mc.py > out/cusum-dual-output.txt'
 
 wf-audit: image
 	$(RUN) sh -c 'cd rsep-pq-shell/wf-audit && cargo run --release'
