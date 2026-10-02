@@ -1,0 +1,425 @@
+=== [1] cargo test --release ===
+warning: unused import: `ark_relations::r1cs::ConstraintSynthesizer`
+  --> src/proof.rs:24:5
+   |
+24 | use ark_relations::r1cs::ConstraintSynthesizer;
+   |     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+   |
+   = note: `#[warn(unused_imports)]` (part of `#[warn(unused)]`) on by default
+
+warning: unused import: `ark_ff::PrimeField`
+  --> src/rsep.rs:13:5
+   |
+13 | use ark_ff::PrimeField;
+   |     ^^^^^^^^^^^^^^^^^^
+
+warning: unused import: `Blake2b512`
+  --> src/wots.rs:24:14
+   |
+24 | use blake2::{Blake2b512, Digest};
+   |              ^^^^^^^^^^
+
+warning: unused import: `self`
+  --> src/xmss.rs:16:5
+   |
+16 |     self, expand_seed, h2, ltree, message_digits, pk_from_sk, pk_from_sig,
+   |     ^^^^
+
+warning: unused import: `Digest`
+  --> src/wots.rs:24:26
+   |
+24 | use blake2::{Blake2b512, Digest};
+   |                          ^^^^^^
+
+warning: unused import: `ark_ff::Zero`
+  --> src/xmss.rs:20:5
+   |
+20 | use ark_ff::Zero;
+   |     ^^^^^^^^^^^^
+
+warning: variable does not need to be mutable
+  --> src/poseidon.rs:51:13
+   |
+51 |         let mut next = |label: u8, idx: u64| -> Fr {
+   |             ----^^^^
+   |             |
+   |             help: remove this `mut`
+   |
+   = note: `#[warn(unused_mut)]` (part of `#[warn(unused)]`) on by default
+
+warning: missing documentation for a struct field
+  --> src/errors.rs:11:27
+   |
+11 |     LeafIndexOutOfRange { index: u64, h: u8 },
+   |                           ^^^^^^^^^^
+   |
+note: the lint level is defined here
+  --> src/lib.rs:17:9
+   |
+17 | #![warn(missing_docs)]
+   |         ^^^^^^^^^^^^
+
+warning: missing documentation for a struct field
+  --> src/errors.rs:11:39
+   |
+11 |     LeafIndexOutOfRange { index: u64, h: u8 },
+   |                                       ^^^^^
+
+warning: missing documentation for a struct field
+  --> src/errors.rs:15:25
+   |
+15 |     LeafStateMismatch { index: u64, expected: LeafState },
+   |                         ^^^^^^^^^^
+
+warning: missing documentation for a struct field
+  --> src/errors.rs:15:37
+   |
+15 |     LeafStateMismatch { index: u64, expected: LeafState },
+   |                                     ^^^^^^^^^^^^^^^^^^^
+
+warning: missing documentation for a struct field
+  --> src/errors.rs:19:23
+   |
+19 |     CounterRollback { offered: u64, current: u64 },
+   |                       ^^^^^^^^^^^^
+
+warning: missing documentation for a struct field
+  --> src/errors.rs:19:37
+   |
+19 |     CounterRollback { offered: u64, current: u64 },
+   |                                     ^^^^^^^^^^^^
+
+warning: `rsep-xmss` (lib) generated 13 warnings (run `cargo fix --lib -p rsep-xmss` to apply 5 suggestions)
+warning: unused imports: `Blake2b512` and `Digest`
+  --> src/wots.rs:24:14
+   |
+24 | use blake2::{Blake2b512, Digest};
+   |              ^^^^^^^^^^  ^^^^^^
+
+warning: `rsep-xmss` (lib test) generated 12 warnings (11 duplicates) (run `cargo fix --lib -p rsep-xmss --tests` to apply 1 suggestion)
+warning: unused import: `RsepPublicKey`
+  --> tests/integration.rs:14:11
+   |
+14 |     self, RsepPublicKey, RsepSignature, Verdict, VerifierState,
+   |           ^^^^^^^^^^^^^
+   |
+   = note: `#[warn(unused_imports)]` (part of `#[warn(unused)]`) on by default
+
+warning: `rsep-xmss` (test "integration") generated 1 warning (run `cargo fix --test "integration" -p rsep-xmss` to apply 1 suggestion)
+    Finished `release` profile [optimized] target(s) in 0.06s
+     Running unittests src/lib.rs (target/release/deps/rsep_xmss-4660d401c5a666a2)
+
+running 37 tests
+test adrs::tests::field_offsets_are_disjoint ... ok
+test adrs::tests::ltree_fields_are_disjoint ... ok
+test circuit::comparator::tests::comparator_body_is_three_constraints ... ok
+test circuit::comparator::tests::truth_table_matches_paper ... ok
+test circuit::merkle_gadget::tests::verify_valid_path ... ok
+test circuit::poseidon_gadget::tests::hash2_gadget_constraint_count ... ok
+test circuit::poseidon_gadget::tests::hash2_gadget_matches_out_of_circuit ... ok
+test circuit::poseidon_gadget::tests::hash2_lc_constraint_count ... ok
+test circuit::rsep::tests::constraint_count_at_h10 ... ok
+test circuit::rsep::tests::finalization_relation_is_satisfied ... ok
+test circuit::rsep::tests::signature_relation_is_satisfied ... ok
+test poseidon::tests::deterministic ... ok
+test poseidon::tests::hash_slice_matches_manual_absorb ... ok
+test poseidon::tests::not_symmetric ... ok
+test poseidon::tests::sensitive_to_domain ... ok
+test circuit::merkle_gadget::tests::setup_at_index_0_prove_at_all_indices ... ok
+test rsep::tests::end_to_end_finalize ... ok
+test rsep::tests::end_to_end_sign_verify ... ok
+test rsep::tests::finalize_with_xmss_rejected ... ok
+test rsep::tests::replay_rejected ... ok
+test rsep::tests::reuse_leaf_rejected_locally ... ok
+test state::tests::encoding_roundtrip ... ok
+test state::tests::next_is_strict_lt ... ok
+test state::tests::strict_order_matches_paper_table ... ok
+test wots::tests::chain_composition ... ok
+test wots::tests::chain_zero_steps_is_identity ... ok
+test wots::tests::digits_sum_is_constant ... ok
+test wots::tests::ltree_deterministic_and_sensitive ... ok
+test wots::tests::prf_is_deterministic ... ok
+test wots::tests::wots_roundtrip ... ok
+test wots::tests::wots_wrong_message_rejects ... ok
+test rsep::tests::tampered_message_rejected ... ok
+test xmss::tests::auth_path_length ... ok
+test xmss::tests::sign_verify_roundtrip_small ... ok
+test xmss::tests::tampered_message_rejected ... ok
+test xmss::tests::tree_height_matches ... ok
+test xmss::tests::wrong_index_rejected ... ok
+
+test result: ok. 37 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 10.11s
+
+     Running tests/integration.rs (target/release/deps/integration-e9775f1909eeb3ae)
+
+running 8 tests
+test cross_signer_replay_rejected ... ok
+test full_lifecycle_exhausts_tree ... ok
+test local_state_machine_enforced ... ok
+test serialization_roundtrip ... ok
+test mismatched_xmss_and_proof_rejected ... ok
+test tampered_proof_rejected ... ok
+test wrong_message_short_circuits_before_proof ... ok
+test verifier_state_persists_across_restart ... ok
+
+test result: ok. 8 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 5.21s
+
+   Doc-tests rsep_xmss
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+=== [2] CUSUM artifact bit-reproduction check ===
+ALL CELLS MATCH (162 cells)
+=== [3] Winterfell audit demo (5 runs) ===
+prove   : 38.7 ms
+verify  : 0.503 ms
+proof   : 57656 bytes (56.3 KiB)
+输出: out/wf-audit-proof.bin, out/wf-bench.txt
+prove   : 37.6 ms
+verify  : 0.503 ms
+proof   : 57656 bytes (56.3 KiB)
+输出: out/wf-audit-proof.bin, out/wf-bench.txt
+prove   : 37.4 ms
+verify  : 0.499 ms
+proof   : 57656 bytes (56.3 KiB)
+输出: out/wf-audit-proof.bin, out/wf-bench.txt
+prove   : 39.8 ms
+verify  : 0.463 ms
+proof   : 57656 bytes (56.3 KiB)
+输出: out/wf-audit-proof.bin, out/wf-bench.txt
+prove   : 36.9 ms
+verify  : 0.480 ms
+proof   : 57656 bytes (56.3 KiB)
+输出: out/wf-audit-proof.bin, out/wf-bench.txt
+=== [4] Groth16 measure h=10,12 ===
+warning: unused import: `ark_relations::r1cs::ConstraintSynthesizer`
+  --> src/proof.rs:24:5
+   |
+24 | use ark_relations::r1cs::ConstraintSynthesizer;
+   |     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+   |
+   = note: `#[warn(unused_imports)]` (part of `#[warn(unused)]`) on by default
+
+warning: unused import: `ark_ff::PrimeField`
+  --> src/rsep.rs:13:5
+   |
+13 | use ark_ff::PrimeField;
+   |     ^^^^^^^^^^^^^^^^^^
+
+warning: unused import: `Blake2b512`
+  --> src/wots.rs:24:14
+   |
+24 | use blake2::{Blake2b512, Digest};
+   |              ^^^^^^^^^^
+
+warning: unused import: `self`
+  --> src/xmss.rs:16:5
+   |
+16 |     self, expand_seed, h2, ltree, message_digits, pk_from_sk, pk_from_sig,
+   |     ^^^^
+
+warning: unused import: `Digest`
+  --> src/wots.rs:24:26
+   |
+24 | use blake2::{Blake2b512, Digest};
+   |                          ^^^^^^
+
+warning: unused import: `ark_ff::Zero`
+  --> src/xmss.rs:20:5
+   |
+20 | use ark_ff::Zero;
+   |     ^^^^^^^^^^^^
+
+warning: variable does not need to be mutable
+  --> src/poseidon.rs:51:13
+   |
+51 |         let mut next = |label: u8, idx: u64| -> Fr {
+   |             ----^^^^
+   |             |
+   |             help: remove this `mut`
+   |
+   = note: `#[warn(unused_mut)]` (part of `#[warn(unused)]`) on by default
+
+warning: missing documentation for a struct field
+  --> src/errors.rs:11:27
+   |
+11 |     LeafIndexOutOfRange { index: u64, h: u8 },
+   |                           ^^^^^^^^^^
+   |
+note: the lint level is defined here
+  --> src/lib.rs:17:9
+   |
+17 | #![warn(missing_docs)]
+   |         ^^^^^^^^^^^^
+
+warning: missing documentation for a struct field
+  --> src/errors.rs:11:39
+   |
+11 |     LeafIndexOutOfRange { index: u64, h: u8 },
+   |                                       ^^^^^
+
+warning: missing documentation for a struct field
+  --> src/errors.rs:15:25
+   |
+15 |     LeafStateMismatch { index: u64, expected: LeafState },
+   |                         ^^^^^^^^^^
+
+warning: missing documentation for a struct field
+  --> src/errors.rs:15:37
+   |
+15 |     LeafStateMismatch { index: u64, expected: LeafState },
+   |                                     ^^^^^^^^^^^^^^^^^^^
+
+warning: missing documentation for a struct field
+  --> src/errors.rs:19:23
+   |
+19 |     CounterRollback { offered: u64, current: u64 },
+   |                       ^^^^^^^^^^^^
+
+warning: missing documentation for a struct field
+  --> src/errors.rs:19:37
+   |
+19 |     CounterRollback { offered: u64, current: u64 },
+   |                                     ^^^^^^^^^^^^
+
+warning: `rsep-xmss` (lib) generated 13 warnings (run `cargo fix --lib -p rsep-xmss` to apply 5 suggestions)
+    Finished `release` profile [optimized] target(s) in 0.04s
+     Running `target/release/examples/measure 10 5`
+# rsep-xmss measure: h=10, iters=5, msg=0x77*32
+# prof=release; poseidon-domain=b"measure"; iso_reps=5
+setup_sign_iso_ms: min=293.062 med=296.433 max=299.367 (n=5)
+prove_sign_iso_ms: min=270.166 med=272.618 max=281.542 (n=5)
+verify_sign_iso_ms: min=0.897 med=0.921 max=0.982 (n=5)  # placeholder-satisfied=false
+keygen_ms: 108519.613
+vmhwm_after_keygen_kib: 30432
+xmss_sign_only_ms: 44.389
+finalize_prove_ms: 278.795
+finalize_verify_ms: 1.151
+proof_bytes: 128
+fin_proof_bytes: 128
+vk_bytes: 424
+xmss_sig_bytes: 2472
+rsep_sig_extra_bytes: 168  # pi + c + root'
+rsep_sig_total_bytes: 2640
+sign_ms: min=318.735 med=320.298 max=327.929 (n=5) [318.735, 320.298, 321.875, 319.276, 327.929]
+verify_e2e_ms: min=63.200 med=63.269 max=63.332 (n=5) [63.269, 63.332, 63.248, 63.313, 63.200]
+groth16_verify_ms: min=1.121 med=1.123 max=1.434 (n=5) [1.122, 1.123, 1.145, 1.434, 1.121]
+vmhwm_final_kib: 34928
+wall_total_ms: 113634.575
+warning: unused import: `ark_relations::r1cs::ConstraintSynthesizer`
+  --> src/proof.rs:24:5
+   |
+24 | use ark_relations::r1cs::ConstraintSynthesizer;
+   |     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+   |
+   = note: `#[warn(unused_imports)]` (part of `#[warn(unused)]`) on by default
+
+warning: unused import: `ark_ff::PrimeField`
+  --> src/rsep.rs:13:5
+   |
+13 | use ark_ff::PrimeField;
+   |     ^^^^^^^^^^^^^^^^^^
+
+warning: unused import: `Blake2b512`
+  --> src/wots.rs:24:14
+   |
+24 | use blake2::{Blake2b512, Digest};
+   |              ^^^^^^^^^^
+
+warning: unused import: `self`
+  --> src/xmss.rs:16:5
+   |
+16 |     self, expand_seed, h2, ltree, message_digits, pk_from_sk, pk_from_sig,
+   |     ^^^^
+
+warning: unused import: `Digest`
+  --> src/wots.rs:24:26
+   |
+24 | use blake2::{Blake2b512, Digest};
+   |                          ^^^^^^
+
+warning: unused import: `ark_ff::Zero`
+  --> src/xmss.rs:20:5
+   |
+20 | use ark_ff::Zero;
+   |     ^^^^^^^^^^^^
+
+warning: variable does not need to be mutable
+  --> src/poseidon.rs:51:13
+   |
+51 |         let mut next = |label: u8, idx: u64| -> Fr {
+   |             ----^^^^
+   |             |
+   |             help: remove this `mut`
+   |
+   = note: `#[warn(unused_mut)]` (part of `#[warn(unused)]`) on by default
+
+warning: missing documentation for a struct field
+  --> src/errors.rs:11:27
+   |
+11 |     LeafIndexOutOfRange { index: u64, h: u8 },
+   |                           ^^^^^^^^^^
+   |
+note: the lint level is defined here
+  --> src/lib.rs:17:9
+   |
+17 | #![warn(missing_docs)]
+   |         ^^^^^^^^^^^^
+
+warning: missing documentation for a struct field
+  --> src/errors.rs:11:39
+   |
+11 |     LeafIndexOutOfRange { index: u64, h: u8 },
+   |                                       ^^^^^
+
+warning: missing documentation for a struct field
+  --> src/errors.rs:15:25
+   |
+15 |     LeafStateMismatch { index: u64, expected: LeafState },
+   |                         ^^^^^^^^^^
+
+warning: missing documentation for a struct field
+  --> src/errors.rs:15:37
+   |
+15 |     LeafStateMismatch { index: u64, expected: LeafState },
+   |                                     ^^^^^^^^^^^^^^^^^^^
+
+warning: missing documentation for a struct field
+  --> src/errors.rs:19:23
+   |
+19 |     CounterRollback { offered: u64, current: u64 },
+   |                       ^^^^^^^^^^^^
+
+warning: missing documentation for a struct field
+  --> src/errors.rs:19:37
+   |
+19 |     CounterRollback { offered: u64, current: u64 },
+   |                                     ^^^^^^^^^^^^
+
+warning: `rsep-xmss` (lib) generated 13 warnings (run `cargo fix --lib -p rsep-xmss` to apply 5 suggestions)
+    Finished `release` profile [optimized] target(s) in 0.07s
+     Running `target/release/examples/measure 12 5`
+# rsep-xmss measure: h=12, iters=5, msg=0x77*32
+# prof=release; poseidon-domain=b"measure"; iso_reps=5
+setup_sign_iso_ms: min=337.366 med=338.542 max=344.918 (n=5)
+prove_sign_iso_ms: min=309.409 med=310.795 max=317.383 (n=5)
+verify_sign_iso_ms: min=0.882 med=0.930 max=0.976 (n=5)  # placeholder-satisfied=false
+keygen_ms: 429182.548
+vmhwm_after_keygen_kib: 35912
+xmss_sign_only_ms: 44.223
+finalize_prove_ms: 309.817
+finalize_verify_ms: 1.200
+proof_bytes: 128
+fin_proof_bytes: 128
+vk_bytes: 424
+xmss_sig_bytes: 2536
+rsep_sig_extra_bytes: 168  # pi + c + root'
+rsep_sig_total_bytes: 2704
+sign_ms: min=352.265 med=355.652 max=356.401 (n=5) [355.652, 356.401, 356.079, 353.057, 352.265]
+verify_e2e_ms: min=62.998 med=63.469 max=64.914 (n=5) [64.914, 63.169, 63.469, 62.998, 64.143]
+groth16_verify_ms: min=1.112 med=1.129 max=1.174 (n=5) [1.113, 1.141, 1.129, 1.112, 1.174]
+vmhwm_final_kib: 39112
+wall_total_ms: 434905.520
+REPRO-DONE step=core 2026-10-02T06:09:18+00:00
