@@ -14,7 +14,7 @@ MEM    ?= 4g
 H      ?= 10
 RUN     = $(DOCKER) run --rm --cpus=$(CPUS) --memory=$(MEM) -v "$(PWD)/out:/work/out" $(IMAGE)
 
-.PHONY: image test measure measure-all cusum cusum-dual wf-audit reproduce-all clean
+.PHONY: image test measure measure-all baseline per-event cusum cusum-dual wf-audit reproduce-all clean
 
 image:
 	$(DOCKER) build -t $(IMAGE) .
@@ -29,6 +29,14 @@ measure: image
 measure-all: image
 	mkdir -p out
 	$(RUN) sh -c 'for h in 10 12 16; do cargo run --release --example measure -- $$h 5 | tee out/measure-v4-h$$h.log; done'
+
+baseline: image
+	mkdir -p out
+	$(RUN) cargo run --release --example baseline -- $(H) 5
+
+per-event: image
+	mkdir -p out
+	$(RUN) sh -c 'python3 statistics/per_event_bench.py > out/per-event-bench.txt'
 
 cusum: image
 	mkdir -p out

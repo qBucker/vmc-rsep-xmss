@@ -1,7 +1,8 @@
 # measurements — 测量记录与口径
 
-> 配套：`notes/measurements.md`（全程总汇与论文对照）｜`examples/measure.rs`（测量程序）
+> 配套：`notes/measurements.md`（全程总汇与论文对照）｜`examples/measure.rs`（测量程序）｜`examples/baseline.rs`（同会话 A/B 探测）
 > 运行：`cargo run --release --example measure -- <h> [iters] [msg_byte]`（msg 默认 0x77；iters=5）
+> 　　：`cargo run --release --example baseline -- <h> [iters]`（plain XMSS vs RSEP-XMSS）
 
 ## 轮次
 
@@ -10,7 +11,8 @@
 | v1 | 2026-10-01 | msg=0x42；与 h=16 keygen 存在并发 | `raw/measure-*.log` |
 | v2 | 2026-10-01/02 | msg=0x77（此前权威口径）；部分并发 | `raw/measure2-*.log` |
 | v3 | 2026-10-02 | msg=0x77；`taskset -c 0,1` 双核钉住；顺序独立单跑 | `raw/measure-v3-*.log` |
-| v4（计划） | — | Docker `--cpus=2 --memory=4g`（canonical 口径） | `raw/measure-v4-*.log` |
+| v4（canonical） | 2026-10-02 | Docker `--cpus=2 --memory=4g`（canonical 口径） | `raw/measure-v4-*.log` |
+| v5 | 2026-10-03 | 同容器（重建镜像，含 `examples/baseline.rs`）；baseline 同会话 A/B + per-event 微基准 | `raw/baseline-v5-h10.log`、`raw/per-event-bench-v5.txt` |
 
 ## 纪律
 

@@ -1,0 +1,4 @@
+# per-event microbench (python 3.11.2)
+# scalar: S = max(0, S + x - k); vectorized: S = cumsum - running min
+scalar_ns_per_update: 68.4  # n=2000000
+numpy_ns_per_elem: 15.09  # 200 streams x T=10000

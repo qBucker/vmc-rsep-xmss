@@ -1,0 +1,109 @@
+warning: unused import: `ark_relations::r1cs::ConstraintSynthesizer`
+  --> src/proof.rs:24:5
+   |
+24 | use ark_relations::r1cs::ConstraintSynthesizer;
+   |     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+   |
+   = note: `#[warn(unused_imports)]` (part of `#[warn(unused)]`) on by default
+
+warning: unused import: `ark_ff::PrimeField`
+  --> src/rsep.rs:13:5
+   |
+13 | use ark_ff::PrimeField;
+   |     ^^^^^^^^^^^^^^^^^^
+
+warning: unused import: `Blake2b512`
+  --> src/wots.rs:24:14
+   |
+24 | use blake2::{Blake2b512, Digest};
+   |              ^^^^^^^^^^
+
+warning: unused import: `self`
+  --> src/xmss.rs:16:5
+   |
+16 |     self, expand_seed, h2, ltree, message_digits, pk_from_sk, pk_from_sig,
+   |     ^^^^
+
+warning: unused import: `Digest`
+  --> src/wots.rs:24:26
+   |
+24 | use blake2::{Blake2b512, Digest};
+   |                          ^^^^^^
+
+warning: unused import: `ark_ff::Zero`
+  --> src/xmss.rs:20:5
+   |
+20 | use ark_ff::Zero;
+   |     ^^^^^^^^^^^^
+
+warning: variable does not need to be mutable
+  --> src/poseidon.rs:51:13
+   |
+51 |         let mut next = |label: u8, idx: u64| -> Fr {
+   |             ----^^^^
+   |             |
+   |             help: remove this `mut`
+   |
+   = note: `#[warn(unused_mut)]` (part of `#[warn(unused)]`) on by default
+
+warning: missing documentation for a struct field
+  --> src/errors.rs:11:27
+   |
+11 |     LeafIndexOutOfRange { index: u64, h: u8 },
+   |                           ^^^^^^^^^^
+   |
+note: the lint level is defined here
+  --> src/lib.rs:17:9
+   |
+17 | #![warn(missing_docs)]
+   |         ^^^^^^^^^^^^
+
+warning: missing documentation for a struct field
+  --> src/errors.rs:11:39
+   |
+11 |     LeafIndexOutOfRange { index: u64, h: u8 },
+   |                                       ^^^^^
+
+warning: missing documentation for a struct field
+  --> src/errors.rs:15:25
+   |
+15 |     LeafStateMismatch { index: u64, expected: LeafState },
+   |                         ^^^^^^^^^^
+
+warning: missing documentation for a struct field
+  --> src/errors.rs:15:37
+   |
+15 |     LeafStateMismatch { index: u64, expected: LeafState },
+   |                                     ^^^^^^^^^^^^^^^^^^^
+
+warning: missing documentation for a struct field
+  --> src/errors.rs:19:23
+   |
+19 |     CounterRollback { offered: u64, current: u64 },
+   |                       ^^^^^^^^^^^^
+
+warning: missing documentation for a struct field
+  --> src/errors.rs:19:37
+   |
+19 |     CounterRollback { offered: u64, current: u64 },
+   |                                     ^^^^^^^^^^^^
+
+warning: `rsep-xmss` (lib) generated 13 warnings (run `cargo fix --lib -p rsep-xmss` to apply 5 suggestions)
+    Finished `release` profile [optimized] target(s) in 0.07s
+     Running `target/release/examples/baseline 10 5`
+# baseline probe: plain XMSS core vs RSEP-XMSS (same session)
+# rsep-xmss baseline: h=10, iters=5, msg=0x77*32
+# prof=release; poseidon-domain=b"measure"
+hash2_ms: min=0.014 med=0.014 max=0.087 (n=1000)
+keygen_ms: 108822.259
+xmss_sign_ms: min=44.292 med=44.878 max=45.361 (n=5)
+xmss_verify_ms: min=62.347 med=62.527 max=63.435 (n=5)
+rsep_sign_ms: min=321.608 med=326.407 max=336.119 (n=5)
+rsep_groth16_verify_ms: min=1.136 med=1.163 max=1.198 (n=5)
+rsep_verify_ms: min=64.005 med=65.084 max=66.838 (n=5)
+xmss_sig_bytes: 2472
+pi_bytes: 128
+vk_bytes: 424
+rsep_sig_extra_bytes: 168  # pi + c + root'
+rsep_sig_total_bytes: 2640
+wall_total_ms: 111344.096
