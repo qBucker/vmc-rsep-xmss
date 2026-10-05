@@ -1,0 +1,14 @@
+full-v1 report (O2 batch)
+========================
+elf: ../rsep-guest.elf (user 186076 B) | po2=19 | image_id=8b150f91fbe709ad063ea38c0f09bfa3ffa07e4196c1b0e845af78f894113939
+segments: 108
+cycles: user=50865966 paging=2546637 reserved=3210501 total=56623104
+sessions: 1 (resumed this session: seg=0 lift=0 join=0)
+exec: computed=1 resumed=0 total_ms=736 mean_ms=736 median_ms=736 min_ms=736 max_ms=736 bytes=[0,0]
+resolve: computed=108 resumed=0 total_ms=0 mean_ms=0 median_ms=0 min_ms=0 max_ms=0 bytes=[0,0]
+seg: computed=108 resumed=0 total_ms=4433512 mean_ms=41051 median_ms=41402 min_ms=38185 max_ms=46518 bytes=[268066,268182]
+segverify: computed=108 resumed=0 total_ms=1325 mean_ms=12 median_ms=12 min_ms=11 max_ms=14 bytes=[0,0]
+lift: computed=108 resumed=0 total_ms=761902 mean_ms=7054 median_ms=7078 min_ms=6595 max_ms=7873 bytes=[223154,223270]
+join: computed=107 resumed=0 total_ms=794013 mean_ms=7420 median_ms=7393 min_ms=7046 max_ms=7876 bytes=[223154,223270]
+final: receipt_bytes=223270 integrity_us=14027 verify_us=11492 journal_ok=true
+wall_this_session_min: 99.87

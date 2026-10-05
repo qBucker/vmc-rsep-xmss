@@ -1,0 +1,357 @@
+# host: 20 cores | 11.7 GiB RAM | Linux 6.6.87.2-microsoft-standard-WSL2
+# date: 2026-10-05T09:12:05Z
+# cmd: full ../rsep-guest.elf 19
+# guest_elf_sha256: e086acf489689c38349bba472124e4205e4cfd1d7971a81eee07c2f1b1cd10f9
+# env: RAYON_NUM_THREADS=<unset>
+full-v1: elf=../rsep-guest.elf | segment_po2=19 | image_id=8b150f91fbe709ad063ea38c0f09bfa3ffa07e4196c1b0e845af78f894113939
+execute: 736 ms | segments=108 | user_cycles=50865966 | total_cycles=56623104 | VmHWM 44000 KB
+seg 0/108: 39974 ms | verify 12559 us | receipt 268066 B | VmHWM 4802080 KB | elapsed 0.7 min
+seg 1/108: 38755 ms | verify 12694 us | receipt 268066 B | VmHWM 4813492 KB | elapsed 1.3 min
+seg 2/108: 38398 ms | verify 12309 us | receipt 268066 B | VmHWM 4813616 KB | elapsed 2.0 min
+seg 3/108: 38491 ms | verify 12553 us | receipt 268066 B | VmHWM 4813632 KB | elapsed 2.6 min
+seg 4/108: 38472 ms | verify 14356 us | receipt 268066 B | VmHWM 4813936 KB | elapsed 3.2 min
+seg 5/108: 38197 ms | verify 12124 us | receipt 268066 B | VmHWM 4813936 KB | elapsed 3.9 min
+seg 6/108: 38271 ms | verify 12191 us | receipt 268066 B | VmHWM 4813936 KB | elapsed 4.5 min
+seg 7/108: 38497 ms | verify 12332 us | receipt 268066 B | VmHWM 4813936 KB | elapsed 5.2 min
+seg 8/108: 38476 ms | verify 12449 us | receipt 268066 B | VmHWM 4813996 KB | elapsed 5.8 min
+seg 9/108: 38185 ms | verify 12304 us | receipt 268066 B | VmHWM 4813996 KB | elapsed 6.4 min
+seg 10/108: 38666 ms | verify 12311 us | receipt 268066 B | VmHWM 4814364 KB | elapsed 7.1 min
+seg 11/108: 38419 ms | verify 12342 us | receipt 268066 B | VmHWM 4814364 KB | elapsed 7.7 min
+seg 12/108: 38478 ms | verify 12747 us | receipt 268066 B | VmHWM 4814464 KB | elapsed 8.4 min
+seg 13/108: 38897 ms | verify 12506 us | receipt 268066 B | VmHWM 4814496 KB | elapsed 9.0 min
+seg 14/108: 38582 ms | verify 12488 us | receipt 268066 B | VmHWM 4814496 KB | elapsed 9.7 min
+seg 15/108: 38189 ms | verify 12282 us | receipt 268066 B | VmHWM 4814496 KB | elapsed 10.3 min
+seg 16/108: 38368 ms | verify 12811 us | receipt 268066 B | VmHWM 4814496 KB | elapsed 10.9 min
+seg 17/108: 38685 ms | verify 13731 us | receipt 268066 B | VmHWM 4814496 KB | elapsed 11.6 min
+seg 18/108: 38389 ms | verify 12236 us | receipt 268066 B | VmHWM 4814496 KB | elapsed 12.2 min
+seg 19/108: 39094 ms | verify 13144 us | receipt 268066 B | VmHWM 4814496 KB | elapsed 12.9 min
+seg 20/108: 46518 ms | verify 12811 us | receipt 268066 B | VmHWM 4814496 KB | elapsed 13.7 min
+seg 21/108: 42607 ms | verify 12680 us | receipt 268066 B | VmHWM 4814496 KB | elapsed 14.4 min
+seg 22/108: 42565 ms | verify 12313 us | receipt 268066 B | VmHWM 4814496 KB | elapsed 15.1 min
+seg 23/108: 43050 ms | verify 13220 us | receipt 268066 B | VmHWM 4814496 KB | elapsed 15.8 min
+seg 24/108: 41398 ms | verify 12755 us | receipt 268066 B | VmHWM 4814496 KB | elapsed 16.5 min
+seg 25/108: 41734 ms | verify 13035 us | receipt 268066 B | VmHWM 4814496 KB | elapsed 17.2 min
+seg 26/108: 41872 ms | verify 12502 us | receipt 268066 B | VmHWM 4814496 KB | elapsed 17.9 min
+seg 27/108: 41106 ms | verify 12830 us | receipt 268066 B | VmHWM 4814496 KB | elapsed 18.6 min
+seg 28/108: 41582 ms | verify 12641 us | receipt 268066 B | VmHWM 4814496 KB | elapsed 19.3 min
+seg 29/108: 41574 ms | verify 13710 us | receipt 268066 B | VmHWM 4814496 KB | elapsed 19.9 min
+seg 30/108: 41913 ms | verify 12842 us | receipt 268066 B | VmHWM 4814496 KB | elapsed 20.6 min
+seg 31/108: 41404 ms | verify 12575 us | receipt 268066 B | VmHWM 4814496 KB | elapsed 21.3 min
+seg 32/108: 41657 ms | verify 13112 us | receipt 268066 B | VmHWM 4814496 KB | elapsed 22.0 min
+seg 33/108: 43106 ms | verify 12198 us | receipt 268066 B | VmHWM 4814496 KB | elapsed 22.7 min
+seg 34/108: 42661 ms | verify 12775 us | receipt 268066 B | VmHWM 4814496 KB | elapsed 23.5 min
+seg 35/108: 42939 ms | verify 12977 us | receipt 268066 B | VmHWM 4814496 KB | elapsed 24.2 min
+seg 36/108: 43877 ms | verify 12953 us | receipt 268066 B | VmHWM 4814496 KB | elapsed 24.9 min
+seg 37/108: 42533 ms | verify 12559 us | receipt 268066 B | VmHWM 4814496 KB | elapsed 25.6 min
+seg 38/108: 40008 ms | verify 12311 us | receipt 268066 B | VmHWM 4814496 KB | elapsed 26.3 min
+seg 39/108: 39089 ms | verify 12338 us | receipt 268066 B | VmHWM 4814496 KB | elapsed 26.9 min
+seg 40/108: 40158 ms | verify 12907 us | receipt 268066 B | VmHWM 4814496 KB | elapsed 27.6 min
+seg 41/108: 43515 ms | verify 12752 us | receipt 268066 B | VmHWM 4814496 KB | elapsed 28.3 min
+seg 42/108: 42260 ms | verify 13915 us | receipt 268066 B | VmHWM 4814496 KB | elapsed 29.0 min
+seg 43/108: 41200 ms | verify 12749 us | receipt 268066 B | VmHWM 4814496 KB | elapsed 29.7 min
+seg 44/108: 39105 ms | verify 12619 us | receipt 268066 B | VmHWM 4814496 KB | elapsed 30.4 min
+seg 45/108: 40142 ms | verify 12633 us | receipt 268066 B | VmHWM 4814496 KB | elapsed 31.0 min
+seg 46/108: 41926 ms | verify 13547 us | receipt 268066 B | VmHWM 4814496 KB | elapsed 31.7 min
+seg 47/108: 41242 ms | verify 12790 us | receipt 268066 B | VmHWM 4814496 KB | elapsed 32.4 min
+seg 48/108: 41341 ms | verify 13055 us | receipt 268066 B | VmHWM 4814496 KB | elapsed 33.1 min
+seg 49/108: 41970 ms | verify 12498 us | receipt 268066 B | VmHWM 4814496 KB | elapsed 33.8 min
+seg 50/108: 41823 ms | verify 12907 us | receipt 268066 B | VmHWM 4814496 KB | elapsed 34.5 min
+seg 51/108: 41592 ms | verify 12697 us | receipt 268066 B | VmHWM 4814496 KB | elapsed 35.2 min
+seg 52/108: 41894 ms | verify 13240 us | receipt 268066 B | VmHWM 4814496 KB | elapsed 35.9 min
+seg 53/108: 41530 ms | verify 12661 us | receipt 268066 B | VmHWM 4814496 KB | elapsed 36.6 min
+seg 54/108: 41461 ms | verify 12746 us | receipt 268066 B | VmHWM 4814496 KB | elapsed 37.3 min
+seg 55/108: 41468 ms | verify 12377 us | receipt 268066 B | VmHWM 4814496 KB | elapsed 38.0 min
+seg 56/108: 40940 ms | verify 12562 us | receipt 268066 B | VmHWM 4814496 KB | elapsed 38.7 min
+seg 57/108: 41244 ms | verify 12767 us | receipt 268066 B | VmHWM 4814496 KB | elapsed 39.4 min
+seg 58/108: 41112 ms | verify 12866 us | receipt 268066 B | VmHWM 4814496 KB | elapsed 40.0 min
+seg 59/108: 41934 ms | verify 12452 us | receipt 268066 B | VmHWM 4814496 KB | elapsed 40.7 min
+seg 60/108: 41215 ms | verify 13445 us | receipt 268066 B | VmHWM 4814496 KB | elapsed 41.4 min
+seg 61/108: 41293 ms | verify 13812 us | receipt 268066 B | VmHWM 4814496 KB | elapsed 42.1 min
+seg 62/108: 41311 ms | verify 12250 us | receipt 268066 B | VmHWM 4814496 KB | elapsed 42.8 min
+seg 63/108: 40838 ms | verify 13047 us | receipt 268066 B | VmHWM 4814496 KB | elapsed 43.5 min
+seg 64/108: 41050 ms | verify 13317 us | receipt 268066 B | VmHWM 4814496 KB | elapsed 44.2 min
+seg 65/108: 41290 ms | verify 13145 us | receipt 268066 B | VmHWM 4814496 KB | elapsed 44.9 min
+seg 66/108: 41008 ms | verify 12552 us | receipt 268066 B | VmHWM 4814496 KB | elapsed 45.5 min
+seg 67/108: 41248 ms | verify 12420 us | receipt 268066 B | VmHWM 4814496 KB | elapsed 46.2 min
+seg 68/108: 41509 ms | verify 13589 us | receipt 268066 B | VmHWM 4814496 KB | elapsed 46.9 min
+seg 69/108: 40987 ms | verify 12244 us | receipt 268066 B | VmHWM 4814496 KB | elapsed 47.6 min
+seg 70/108: 41333 ms | verify 12399 us | receipt 268066 B | VmHWM 4814496 KB | elapsed 48.3 min
+seg 71/108: 41282 ms | verify 12777 us | receipt 268066 B | VmHWM 4814496 KB | elapsed 49.0 min
+seg 72/108: 41560 ms | verify 12502 us | receipt 268066 B | VmHWM 4814496 KB | elapsed 49.7 min
+seg 73/108: 41238 ms | verify 12637 us | receipt 268066 B | VmHWM 4814496 KB | elapsed 50.4 min
+seg 74/108: 41624 ms | verify 12614 us | receipt 268066 B | VmHWM 4814496 KB | elapsed 51.1 min
+seg 75/108: 41668 ms | verify 12501 us | receipt 268066 B | VmHWM 4814496 KB | elapsed 51.7 min
+seg 76/108: 41270 ms | verify 12388 us | receipt 268066 B | VmHWM 4814496 KB | elapsed 52.4 min
+seg 77/108: 41920 ms | verify 12742 us | receipt 268066 B | VmHWM 4814496 KB | elapsed 53.1 min
+seg 78/108: 41453 ms | verify 12769 us | receipt 268066 B | VmHWM 4814496 KB | elapsed 53.8 min
+seg 79/108: 41423 ms | verify 13187 us | receipt 268066 B | VmHWM 4814496 KB | elapsed 54.5 min
+seg 80/108: 41231 ms | verify 12436 us | receipt 268066 B | VmHWM 4814496 KB | elapsed 55.2 min
+seg 81/108: 41462 ms | verify 12343 us | receipt 268066 B | VmHWM 4814496 KB | elapsed 55.9 min
+seg 82/108: 41625 ms | verify 14874 us | receipt 268066 B | VmHWM 4814496 KB | elapsed 56.6 min
+seg 83/108: 41399 ms | verify 13669 us | receipt 268066 B | VmHWM 4814496 KB | elapsed 57.3 min
+seg 84/108: 40826 ms | verify 12636 us | receipt 268066 B | VmHWM 4814496 KB | elapsed 58.0 min
+seg 85/108: 41368 ms | verify 12395 us | receipt 268066 B | VmHWM 4814496 KB | elapsed 58.7 min
+seg 86/108: 41926 ms | verify 12394 us | receipt 268066 B | VmHWM 4814496 KB | elapsed 59.4 min
+seg 87/108: 41773 ms | verify 12771 us | receipt 268066 B | VmHWM 4814496 KB | elapsed 60.0 min
+seg 88/108: 41639 ms | verify 12719 us | receipt 268066 B | VmHWM 4814496 KB | elapsed 60.7 min
+seg 89/108: 41204 ms | verify 14224 us | receipt 268066 B | VmHWM 4814496 KB | elapsed 61.4 min
+seg 90/108: 42262 ms | verify 12804 us | receipt 268066 B | VmHWM 4814496 KB | elapsed 62.1 min
+seg 91/108: 42230 ms | verify 12725 us | receipt 268066 B | VmHWM 4814496 KB | elapsed 62.8 min
+seg 92/108: 42409 ms | verify 13737 us | receipt 268066 B | VmHWM 4814496 KB | elapsed 63.5 min
+seg 93/108: 42413 ms | verify 13443 us | receipt 268066 B | VmHWM 4814496 KB | elapsed 64.3 min
+seg 94/108: 41402 ms | verify 12343 us | receipt 268066 B | VmHWM 4814496 KB | elapsed 64.9 min
+seg 95/108: 41457 ms | verify 12495 us | receipt 268066 B | VmHWM 4814496 KB | elapsed 65.6 min
+seg 96/108: 42400 ms | verify 13270 us | receipt 268066 B | VmHWM 4814496 KB | elapsed 66.3 min
+seg 97/108: 42205 ms | verify 12658 us | receipt 268066 B | VmHWM 4814496 KB | elapsed 67.0 min
+seg 98/108: 41970 ms | verify 11980 us | receipt 268066 B | VmHWM 4814496 KB | elapsed 67.7 min
+seg 99/108: 41602 ms | verify 13561 us | receipt 268066 B | VmHWM 4814496 KB | elapsed 68.4 min
+seg 100/108: 42070 ms | verify 12896 us | receipt 268066 B | VmHWM 4814496 KB | elapsed 69.1 min
+seg 101/108: 41405 ms | verify 12226 us | receipt 268066 B | VmHWM 4814496 KB | elapsed 69.8 min
+seg 102/108: 39247 ms | verify 12190 us | receipt 268066 B | VmHWM 4814496 KB | elapsed 70.5 min
+seg 103/108: 39709 ms | verify 12988 us | receipt 268066 B | VmHWM 4814496 KB | elapsed 71.1 min
+seg 104/108: 40713 ms | verify 13387 us | receipt 268066 B | VmHWM 4814496 KB | elapsed 71.8 min
+seg 105/108: 42399 ms | verify 12454 us | receipt 268066 B | VmHWM 4814496 KB | elapsed 72.5 min
+seg 106/108: 42097 ms | verify 13150 us | receipt 268066 B | VmHWM 4814496 KB | elapsed 73.2 min
+seg 107/108: 42016 ms | verify 12404 us | receipt 268182 B | VmHWM 4814496 KB | elapsed 73.9 min
+-- seg phase done: 0 resumed | VmHWM 4814496 KB | elapsed 73.9 min
+lift 0/108: 7782 ms | receipt 223154 B | VmHWM 4814496 KB
+lift 1/108: 7335 ms | receipt 223154 B | VmHWM 4814496 KB
+lift 2/108: 7034 ms | receipt 223154 B | VmHWM 4814496 KB
+lift 3/108: 6997 ms | receipt 223154 B | VmHWM 4814496 KB
+lift 4/108: 6926 ms | receipt 223154 B | VmHWM 4814496 KB
+lift 5/108: 6785 ms | receipt 223154 B | VmHWM 4814496 KB
+lift 6/108: 6882 ms | receipt 223154 B | VmHWM 4814496 KB
+lift 7/108: 6797 ms | receipt 223154 B | VmHWM 4814496 KB
+lift 8/108: 6845 ms | receipt 223154 B | VmHWM 4814496 KB
+lift 9/108: 6864 ms | receipt 223154 B | VmHWM 4814496 KB
+lift 10/108: 6905 ms | receipt 223154 B | VmHWM 4814496 KB
+lift 11/108: 6779 ms | receipt 223154 B | VmHWM 4814496 KB
+lift 12/108: 6831 ms | receipt 223154 B | VmHWM 4814496 KB
+lift 13/108: 6937 ms | receipt 223154 B | VmHWM 4814496 KB
+lift 14/108: 6844 ms | receipt 223154 B | VmHWM 4814496 KB
+lift 15/108: 6854 ms | receipt 223154 B | VmHWM 4814496 KB
+lift 16/108: 6838 ms | receipt 223154 B | VmHWM 4814496 KB
+lift 17/108: 6890 ms | receipt 223154 B | VmHWM 4814496 KB
+lift 18/108: 6820 ms | receipt 223154 B | VmHWM 4814496 KB
+lift 19/108: 6857 ms | receipt 223154 B | VmHWM 4814496 KB
+lift 20/108: 6946 ms | receipt 223154 B | VmHWM 4814496 KB
+lift 21/108: 6829 ms | receipt 223154 B | VmHWM 4814496 KB
+lift 22/108: 6804 ms | receipt 223154 B | VmHWM 4814496 KB
+lift 23/108: 6780 ms | receipt 223154 B | VmHWM 4814496 KB
+lift 24/108: 6892 ms | receipt 223154 B | VmHWM 4814496 KB
+lift 25/108: 6783 ms | receipt 223154 B | VmHWM 4814496 KB
+lift 26/108: 6807 ms | receipt 223154 B | VmHWM 4814496 KB
+lift 27/108: 6825 ms | receipt 223154 B | VmHWM 4814496 KB
+lift 28/108: 6777 ms | receipt 223154 B | VmHWM 4814496 KB
+lift 29/108: 6782 ms | receipt 223154 B | VmHWM 4814496 KB
+lift 30/108: 6855 ms | receipt 223154 B | VmHWM 4814496 KB
+lift 31/108: 6771 ms | receipt 223154 B | VmHWM 4814496 KB
+lift 32/108: 6924 ms | receipt 223154 B | VmHWM 4814496 KB
+lift 33/108: 6853 ms | receipt 223154 B | VmHWM 4814496 KB
+lift 34/108: 6683 ms | receipt 223154 B | VmHWM 4814496 KB
+lift 35/108: 6725 ms | receipt 223154 B | VmHWM 4814496 KB
+lift 36/108: 6748 ms | receipt 223154 B | VmHWM 4814496 KB
+lift 37/108: 6831 ms | receipt 223154 B | VmHWM 4814496 KB
+lift 38/108: 6910 ms | receipt 223154 B | VmHWM 4814496 KB
+lift 39/108: 6595 ms | receipt 223154 B | VmHWM 4814496 KB
+lift 40/108: 6837 ms | receipt 223154 B | VmHWM 4814496 KB
+lift 41/108: 6874 ms | receipt 223154 B | VmHWM 4814496 KB
+lift 42/108: 6848 ms | receipt 223154 B | VmHWM 4814496 KB
+lift 43/108: 6843 ms | receipt 223154 B | VmHWM 4814496 KB
+lift 44/108: 6735 ms | receipt 223154 B | VmHWM 4814496 KB
+lift 45/108: 6742 ms | receipt 223154 B | VmHWM 4814496 KB
+lift 46/108: 6888 ms | receipt 223154 B | VmHWM 4814496 KB
+lift 47/108: 7132 ms | receipt 223154 B | VmHWM 4814496 KB
+lift 48/108: 7275 ms | receipt 223154 B | VmHWM 4814496 KB
+lift 49/108: 7536 ms | receipt 223154 B | VmHWM 4814496 KB
+lift 50/108: 7396 ms | receipt 223154 B | VmHWM 4814496 KB
+lift 51/108: 7314 ms | receipt 223154 B | VmHWM 4814496 KB
+lift 52/108: 7597 ms | receipt 223154 B | VmHWM 4814496 KB
+lift 53/108: 7873 ms | receipt 223154 B | VmHWM 4814496 KB
+lift 54/108: 7383 ms | receipt 223154 B | VmHWM 4814496 KB
+lift 55/108: 7123 ms | receipt 223154 B | VmHWM 4814496 KB
+lift 56/108: 7297 ms | receipt 223154 B | VmHWM 4814496 KB
+lift 57/108: 7084 ms | receipt 223154 B | VmHWM 4814496 KB
+lift 58/108: 7169 ms | receipt 223154 B | VmHWM 4814496 KB
+lift 59/108: 7134 ms | receipt 223154 B | VmHWM 4814496 KB
+lift 60/108: 7466 ms | receipt 223154 B | VmHWM 4814496 KB
+lift 61/108: 7078 ms | receipt 223154 B | VmHWM 4814496 KB
+lift 62/108: 7030 ms | receipt 223154 B | VmHWM 4814496 KB
+lift 63/108: 7075 ms | receipt 223154 B | VmHWM 4814496 KB
+lift 64/108: 7307 ms | receipt 223154 B | VmHWM 4814496 KB
+lift 65/108: 7325 ms | receipt 223154 B | VmHWM 4814496 KB
+lift 66/108: 6920 ms | receipt 223154 B | VmHWM 4814496 KB
+lift 67/108: 7054 ms | receipt 223154 B | VmHWM 4814496 KB
+lift 68/108: 7236 ms | receipt 223154 B | VmHWM 4814496 KB
+lift 69/108: 7486 ms | receipt 223154 B | VmHWM 4814496 KB
+lift 70/108: 7035 ms | receipt 223154 B | VmHWM 4814496 KB
+lift 71/108: 6788 ms | receipt 223154 B | VmHWM 4814496 KB
+lift 72/108: 6842 ms | receipt 223154 B | VmHWM 4814496 KB
+lift 73/108: 7223 ms | receipt 223154 B | VmHWM 4814496 KB
+lift 74/108: 7322 ms | receipt 223154 B | VmHWM 4814496 KB
+lift 75/108: 6908 ms | receipt 223154 B | VmHWM 4814496 KB
+lift 76/108: 7020 ms | receipt 223154 B | VmHWM 4814496 KB
+lift 77/108: 7194 ms | receipt 223154 B | VmHWM 4814496 KB
+lift 78/108: 7247 ms | receipt 223154 B | VmHWM 4814496 KB
+lift 79/108: 7127 ms | receipt 223154 B | VmHWM 4814496 KB
+lift 80/108: 7229 ms | receipt 223154 B | VmHWM 4814496 KB
+lift 81/108: 7241 ms | receipt 223154 B | VmHWM 4814496 KB
+lift 82/108: 7209 ms | receipt 223154 B | VmHWM 4814496 KB
+lift 83/108: 7187 ms | receipt 223154 B | VmHWM 4814496 KB
+lift 84/108: 7156 ms | receipt 223154 B | VmHWM 4814496 KB
+lift 85/108: 7223 ms | receipt 223154 B | VmHWM 4814496 KB
+lift 86/108: 7214 ms | receipt 223154 B | VmHWM 4814496 KB
+lift 87/108: 7134 ms | receipt 223154 B | VmHWM 4814496 KB
+lift 88/108: 7450 ms | receipt 223154 B | VmHWM 4814496 KB
+lift 89/108: 7312 ms | receipt 223154 B | VmHWM 4814496 KB
+lift 90/108: 7192 ms | receipt 223154 B | VmHWM 4814496 KB
+lift 91/108: 7088 ms | receipt 223154 B | VmHWM 4814496 KB
+lift 92/108: 7173 ms | receipt 223154 B | VmHWM 4814496 KB
+lift 93/108: 7158 ms | receipt 223154 B | VmHWM 4814496 KB
+lift 94/108: 7234 ms | receipt 223154 B | VmHWM 4814496 KB
+lift 95/108: 7145 ms | receipt 223154 B | VmHWM 4814496 KB
+lift 96/108: 7207 ms | receipt 223154 B | VmHWM 4814496 KB
+lift 97/108: 7149 ms | receipt 223154 B | VmHWM 4814496 KB
+lift 98/108: 7203 ms | receipt 223154 B | VmHWM 4814496 KB
+lift 99/108: 7119 ms | receipt 223154 B | VmHWM 4814496 KB
+lift 100/108: 7119 ms | receipt 223154 B | VmHWM 4814496 KB
+lift 101/108: 7184 ms | receipt 223154 B | VmHWM 4814496 KB
+lift 102/108: 7193 ms | receipt 223154 B | VmHWM 4814496 KB
+lift 103/108: 7102 ms | receipt 223154 B | VmHWM 4814496 KB
+lift 104/108: 7138 ms | receipt 223154 B | VmHWM 4814496 KB
+lift 105/108: 7246 ms | receipt 223154 B | VmHWM 4814496 KB
+lift 106/108: 7114 ms | receipt 223154 B | VmHWM 4814496 KB
+lift 107/108: 7098 ms | receipt 223270 B | VmHWM 4814496 KB
+-- lift phase done: 0 resumed | VmHWM 4814496 KB | elapsed 86.6 min
+join r0-000: 7347 ms | receipt 223154 B | VmHWM 4814496 KB
+join r0-001: 7405 ms | receipt 223154 B | VmHWM 4814496 KB
+join r0-002: 7411 ms | receipt 223154 B | VmHWM 4814496 KB
+join r0-003: 7378 ms | receipt 223154 B | VmHWM 4814496 KB
+join r0-004: 7379 ms | receipt 223154 B | VmHWM 4814496 KB
+join r0-005: 7357 ms | receipt 223154 B | VmHWM 4814496 KB
+join r0-006: 7364 ms | receipt 223154 B | VmHWM 4814496 KB
+join r0-007: 7441 ms | receipt 223154 B | VmHWM 4814496 KB
+join r0-008: 7549 ms | receipt 223154 B | VmHWM 4814496 KB
+join r0-009: 7424 ms | receipt 223154 B | VmHWM 4814496 KB
+join r0-010: 7342 ms | receipt 223154 B | VmHWM 4814496 KB
+join r0-011: 7417 ms | receipt 223154 B | VmHWM 4814496 KB
+join r0-012: 7331 ms | receipt 223154 B | VmHWM 4814496 KB
+join r0-013: 7383 ms | receipt 223154 B | VmHWM 4814496 KB
+join r0-014: 7326 ms | receipt 223154 B | VmHWM 4814496 KB
+join r0-015: 7430 ms | receipt 223154 B | VmHWM 4814496 KB
+join r0-016: 7371 ms | receipt 223154 B | VmHWM 4814496 KB
+join r0-017: 7374 ms | receipt 223154 B | VmHWM 4814496 KB
+join r0-018: 7310 ms | receipt 223154 B | VmHWM 4814496 KB
+join r0-019: 7459 ms | receipt 223154 B | VmHWM 4814496 KB
+join r0-020: 7419 ms | receipt 223154 B | VmHWM 4814496 KB
+join r0-021: 7375 ms | receipt 223154 B | VmHWM 4814496 KB
+join r0-022: 7296 ms | receipt 223154 B | VmHWM 4814496 KB
+join r0-023: 7401 ms | receipt 223154 B | VmHWM 4814496 KB
+join r0-024: 7444 ms | receipt 223154 B | VmHWM 4814496 KB
+join r0-025: 7345 ms | receipt 223154 B | VmHWM 4814496 KB
+join r0-026: 7266 ms | receipt 223154 B | VmHWM 4814496 KB
+join r0-027: 7365 ms | receipt 223154 B | VmHWM 4814496 KB
+join r0-028: 7336 ms | receipt 223154 B | VmHWM 4814496 KB
+join r0-029: 7314 ms | receipt 223154 B | VmHWM 4814496 KB
+join r0-030: 7369 ms | receipt 223154 B | VmHWM 4814496 KB
+join r0-031: 7349 ms | receipt 223154 B | VmHWM 4814496 KB
+join r0-032: 7336 ms | receipt 223154 B | VmHWM 4814496 KB
+join r0-033: 7452 ms | receipt 223154 B | VmHWM 4814496 KB
+join r0-034: 7445 ms | receipt 223154 B | VmHWM 4814496 KB
+join r0-035: 7748 ms | receipt 223154 B | VmHWM 4814496 KB
+join r0-036: 7461 ms | receipt 223154 B | VmHWM 4814496 KB
+join r0-037: 7484 ms | receipt 223154 B | VmHWM 4814496 KB
+join r0-038: 7369 ms | receipt 223154 B | VmHWM 4814496 KB
+join r0-039: 7475 ms | receipt 223154 B | VmHWM 4814496 KB
+join r0-040: 7585 ms | receipt 223154 B | VmHWM 4814496 KB
+join r0-041: 7419 ms | receipt 223154 B | VmHWM 4814496 KB
+join r0-042: 7437 ms | receipt 223154 B | VmHWM 4814496 KB
+join r0-043: 7393 ms | receipt 223154 B | VmHWM 4814496 KB
+join r0-044: 7445 ms | receipt 223154 B | VmHWM 4814496 KB
+join r0-045: 7413 ms | receipt 223154 B | VmHWM 4814496 KB
+join r0-046: 7381 ms | receipt 223154 B | VmHWM 4814496 KB
+join r0-047: 7310 ms | receipt 223154 B | VmHWM 4814496 KB
+join r0-048: 7453 ms | receipt 223154 B | VmHWM 4814496 KB
+join r0-049: 7388 ms | receipt 223154 B | VmHWM 4814496 KB
+join r0-050: 7499 ms | receipt 223154 B | VmHWM 4814496 KB
+join r0-051: 7503 ms | receipt 223154 B | VmHWM 4814496 KB
+join r0-052: 7390 ms | receipt 223154 B | VmHWM 4814496 KB
+join r0-053: 7224 ms | receipt 223270 B | VmHWM 4814496 KB
+-- join round r0 done: 54 nodes | VmHWM 4814496 KB
+join r1-000: 7300 ms | receipt 223154 B | VmHWM 4814496 KB
+join r1-001: 7321 ms | receipt 223154 B | VmHWM 4814496 KB
+join r1-002: 7467 ms | receipt 223154 B | VmHWM 4814496 KB
+join r1-003: 7327 ms | receipt 223154 B | VmHWM 4814496 KB
+join r1-004: 7376 ms | receipt 223154 B | VmHWM 4814496 KB
+join r1-005: 7340 ms | receipt 223154 B | VmHWM 4814496 KB
+join r1-006: 7369 ms | receipt 223154 B | VmHWM 4814496 KB
+join r1-007: 7306 ms | receipt 223154 B | VmHWM 4814496 KB
+join r1-008: 7500 ms | receipt 223154 B | VmHWM 4814496 KB
+join r1-009: 7304 ms | receipt 223154 B | VmHWM 4814496 KB
+join r1-010: 7352 ms | receipt 223154 B | VmHWM 4814496 KB
+join r1-011: 7324 ms | receipt 223154 B | VmHWM 4814496 KB
+join r1-012: 7460 ms | receipt 223154 B | VmHWM 4814496 KB
+join r1-013: 7193 ms | receipt 223154 B | VmHWM 4814496 KB
+join r1-014: 7313 ms | receipt 223154 B | VmHWM 4814496 KB
+join r1-015: 7331 ms | receipt 223154 B | VmHWM 4814496 KB
+join r1-016: 7690 ms | receipt 223154 B | VmHWM 4814496 KB
+join r1-017: 7406 ms | receipt 223154 B | VmHWM 4814496 KB
+join r1-018: 7350 ms | receipt 223154 B | VmHWM 4814496 KB
+join r1-019: 7607 ms | receipt 223154 B | VmHWM 4814496 KB
+join r1-020: 7665 ms | receipt 223154 B | VmHWM 4814496 KB
+join r1-021: 7436 ms | receipt 223154 B | VmHWM 4814496 KB
+join r1-022: 7305 ms | receipt 223154 B | VmHWM 4814496 KB
+join r1-023: 7440 ms | receipt 223154 B | VmHWM 4814496 KB
+join r1-024: 7665 ms | receipt 223154 B | VmHWM 4814496 KB
+join r1-025: 7535 ms | receipt 223154 B | VmHWM 4814496 KB
+join r1-026: 7343 ms | receipt 223270 B | VmHWM 4814496 KB
+-- join round r1 done: 27 nodes | VmHWM 4814496 KB
+join r2-000: 7348 ms | receipt 223154 B | VmHWM 4814496 KB
+join r2-001: 7587 ms | receipt 223154 B | VmHWM 4814496 KB
+join r2-002: 7529 ms | receipt 223154 B | VmHWM 4814496 KB
+join r2-003: 7250 ms | receipt 223154 B | VmHWM 4814496 KB
+join r2-004: 7543 ms | receipt 223154 B | VmHWM 4814496 KB
+join r2-005: 7503 ms | receipt 223154 B | VmHWM 4814496 KB
+join r2-006: 7699 ms | receipt 223154 B | VmHWM 4814496 KB
+join r2-007: 7257 ms | receipt 223154 B | VmHWM 4814496 KB
+join r2-008: 7456 ms | receipt 223154 B | VmHWM 4814496 KB
+join r2-009: 7539 ms | receipt 223154 B | VmHWM 4814496 KB
+join r2-010: 7644 ms | receipt 223154 B | VmHWM 4814496 KB
+join r2-011: 7293 ms | receipt 223154 B | VmHWM 4814496 KB
+join r2-012: 7276 ms | receipt 223154 B | VmHWM 4814496 KB
+-- join round r2 done: 14 nodes | VmHWM 4814496 KB
+join r3-000: 7485 ms | receipt 223154 B | VmHWM 4814496 KB
+join r3-001: 7704 ms | receipt 223154 B | VmHWM 4814496 KB
+join r3-002: 7769 ms | receipt 223154 B | VmHWM 4814496 KB
+join r3-003: 7876 ms | receipt 223154 B | VmHWM 4814496 KB
+join r3-004: 7600 ms | receipt 223154 B | VmHWM 4814496 KB
+join r3-005: 7546 ms | receipt 223154 B | VmHWM 4814496 KB
+join r3-006: 7579 ms | receipt 223270 B | VmHWM 4814496 KB
+-- join round r3 done: 7 nodes | VmHWM 4814496 KB
+join r4-000: 7316 ms | receipt 223154 B | VmHWM 4814496 KB
+join r4-001: 7358 ms | receipt 223154 B | VmHWM 4814496 KB
+join r4-002: 7409 ms | receipt 223154 B | VmHWM 4814496 KB
+-- join round r4 done: 4 nodes | VmHWM 4814496 KB
+join r5-000: 7522 ms | receipt 223154 B | VmHWM 4814496 KB
+join r5-001: 7046 ms | receipt 223270 B | VmHWM 4814496 KB
+-- join round r5 done: 2 nodes | VmHWM 4814496 KB
+join r6-000: 7167 ms | receipt 223270 B | VmHWM 4814496 KB
+-- join round r6 done: 1 nodes | VmHWM 4814496 KB
+FINAL: receipt 223270 B | integrity 14027 us | full verify 11492 us | journal_ok true
+full-v1 report (O2 batch)
+========================
+elf: ../rsep-guest.elf (user 186076 B) | po2=19 | image_id=8b150f91fbe709ad063ea38c0f09bfa3ffa07e4196c1b0e845af78f894113939
+segments: 108
+cycles: user=50865966 paging=2546637 reserved=3210501 total=56623104
+sessions: 1 (resumed this session: seg=0 lift=0 join=0)
+exec: computed=1 resumed=0 total_ms=736 mean_ms=736 median_ms=736 min_ms=736 max_ms=736 bytes=[0,0]
+resolve: computed=108 resumed=0 total_ms=0 mean_ms=0 median_ms=0 min_ms=0 max_ms=0 bytes=[0,0]
+seg: computed=108 resumed=0 total_ms=4433512 mean_ms=41051 median_ms=41402 min_ms=38185 max_ms=46518 bytes=[268066,268182]
+segverify: computed=108 resumed=0 total_ms=1325 mean_ms=12 median_ms=12 min_ms=11 max_ms=14 bytes=[0,0]
+lift: computed=108 resumed=0 total_ms=761902 mean_ms=7054 median_ms=7078 min_ms=6595 max_ms=7873 bytes=[223154,223270]
+join: computed=107 resumed=0 total_ms=794013 mean_ms=7420 median_ms=7393 min_ms=7046 max_ms=7876 bytes=[223154,223270]
+final: receipt_bytes=223270 integrity_us=14027 verify_us=11492 journal_ok=true
+wall_this_session_min: 99.87
+
+=== full-v1 done ===
+exit=0
