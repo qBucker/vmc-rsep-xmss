@@ -1,0 +1,33 @@
+# agent_trail (E3) v0.4: generator + paired tumbling tri-signal (s1,s2a,s2b) + online CUSUM + epoch state machine
+# schema: t, action_type(8), payload_hash(32B), timestamp, privilege_level; b=1
+# mode=drift N=10000 seed=20260920 drift_at=5000 delta_rate=0.125 drift_type=true
+# cadence=tumble tau=64 eps_kl=0.001 k=0.5 calib_windows=40
+rate_est: 1.020835
+windows: calib=40 total=145 scored=105
+x1_scored: mean=0.4553 std=1.3221
+x2_scored: mean=3.3117 std=3.2329
+x3_scored: mean=2.4548 std=2.2680  # s2b (priv>=2 z)
+# h grid: s1-only | s2a-only | OR(min)
+alarm_h4: s1=t=5536 s2a=t=5084 OR=t=5084
+alarm_h6: s1=t=5700 s2a=t=5164 OR=t=5164
+alarm_h8: s1=t=5700 s2a=t=5235 OR=t=5235
+alarm_h10: s1=t=5921 s2a=t=5235 OR=t=5235
+alarm_h12: s1=t=6006 s2a=t=5305 OR=t=5305
+alarm_h14: s1=t=6932 s2a=t=5305 OR=t=5305
+alarm_h16: s1=t=7020 s2a=t=5305 OR=t=5305
+alarm_h18: s1=t=7095 s2a=t=5378 OR=t=5378
+alarm_h20: s1=t=8230 s2a=t=5378 OR=t=5378
+alarm_h24: s1=t=9378 s2a=t=5459 OR=t=5459
+# h grid pair variant: s2b-only | OR{s1,s2b} | AND{s1,s2b}
+alarm_h4_sb: s2b=t=5164 ORsb=t=5164 ANDsb=t=5536
+alarm_h6_sb: s2b=t=5164 ORsb=t=5164 ANDsb=t=5700
+alarm_h8_sb: s2b=t=5164 ORsb=t=5164 ANDsb=t=5700
+alarm_h10_sb: s2b=t=5235 ORsb=t=5235 ANDsb=t=5921
+alarm_h12_sb: s2b=t=5305 ORsb=t=5305 ANDsb=t=6006
+alarm_h14_sb: s2b=t=5305 ORsb=t=5305 ANDsb=t=6932
+alarm_h16_sb: s2b=t=5378 ORsb=t=5378 ANDsb=t=7020
+alarm_h18_sb: s2b=t=5378 ORsb=t=5378 ANDsb=t=7095
+alarm_h20_sb: s2b=t=5459 ORsb=t=5459 ANDsb=t=8230
+alarm_h24_sb: s2b=t=5459 ORsb=t=5459 ANDsb=t=9378
+wall_ms: 2.0
+all_done

@@ -24,9 +24,11 @@
 //!   keygen、耗尽封印走真实 `finalize`——canonical Tier A 用此模式（约 1.5–2 h）。
 //!   `fast`：hash 链模拟 commit/keygen（信号与状态机逐位一致），开发迭代用。
 //!
-//! ## h0/drift/calib 模式（v0.2 校准层，逐字保留）
+//! ## h0/drift/calib 模式（v0.2 校准层 + v0.4 pair 变体）
 //!
-//! 见下方各常量与函数注释；calib = H0 FAR 表（errata E-2 的现场校准）。
+//! 见下方各常量与函数注释；calib = H0 FAR 表（errata E-2 的现场校准）+ v0.4 pair 变体行
+//! （s₂b = priv≥2 计数 z-score，同 τ 窗同标定；输出 ρ̂(s1,s2b)/ρ̂(s2a,s2b) + 跨 seed
+//! pooled 估计 + farsb_* 行；s1/s2a 既有行逐位不变，run 模式触发数学不动）。
 //! 输出沿用 `measure.rs` 约定：`键: 值`；`#` 开头为注释。
 
 use std::collections::VecDeque;
@@ -78,11 +80,14 @@ fn gen_events(n: usize, seed: u64, drift_at: usize, delta_rate: f64, drift_type:
     let mut rng = ChaCha20Rng::seed_from_u64(seed);
     // payload 用独立 RNG 流：不扰动主流的抽样序列（保持既有校准逐位可复现）
     let mut payload_rng = ChaCha20Rng::seed_from_u64(seed ^ 0x5A5A_5A5A);
+    // 类型漂移混合权重（AT_MIXW，默认 0.5 = 既有口径逐位一致；对称锚定裁决见
+    // notes/theory-ledger.md §8：选 w* 使 x₂ 标准化均移 ≈ μ₁ = 1，与 Table 2 同锚）
+    let mixw: f64 = std::env::var("AT_MIXW").ok().and_then(|s| s.parse().ok()).unwrap_or(0.5);
     let mut events = Vec::with_capacity(n);
     let mut ts = 0.0f64;
     let mut mix = [0.0f64; N_TYPES];
     for i in 0..N_TYPES {
-        mix[i] = 0.5 * P0_WEIGHTS[i] + 0.5 * P1_FOCUS[i];
+        mix[i] = (1.0 - mixw) * P0_WEIGHTS[i] + mixw * P1_FOCUS[i];
     }
     for t in 1..=n {
         let drifted = drift_at > 0 && t >= drift_at;
@@ -133,8 +138,9 @@ impl Cusum {
 }
 
 /// 单次运行的信号采样：tumble = 配对滚动窗（默认）；sliding = 逐事件尾随窗（负对照）。
-fn samples(events: &[Event], cadence_sliding: bool) -> (Vec<(u64, f64, f64)>, f64, usize, usize) {
-    let mut out: Vec<(u64, f64, f64)> = Vec::new();
+/// v0.4：样本扩为 (t, x1, x2, x3)，x3 = s₂b 权限计数 z-score（priv≥2；与 s1 同窗同标定）。
+fn samples(events: &[Event], cadence_sliding: bool) -> (Vec<(u64, f64, f64, f64)>, f64, usize, usize) {
+    let mut out: Vec<(u64, f64, f64, f64)> = Vec::new();
     let mut rate_est;
 
     let mut kl_win: Vec<f64> = Vec::new();
@@ -148,8 +154,15 @@ fn samples(events: &[Event], cadence_sliding: bool) -> (Vec<(u64, f64, f64)>, f6
         // ---- 负对照：逐事件尾随窗（旧实现，强自相关） ----
         let bi = events.len().min(500);
         rate_est = if bi >= 2 { (bi as f64 - 1.0) / events[bi - 1].timestamp } else { 1.0 };
+        let p3_est = if bi >= 2 {
+            events[..bi].iter().filter(|e| e.privilege_level >= 2).count() as f64 / bi as f64
+        } else {
+            0.1
+        };
+        let lam3 = (rate_est * p3_est).max(1e-12);
         let mut win_ts: VecDeque<f64> = VecDeque::new();
         let mut win_types: VecDeque<u8> = VecDeque::new();
+        let mut win_priv: VecDeque<u8> = VecDeque::new();
         let mut bins = [0u32; N_TYPES];
         let mut kl_n = 0u64;
         let mut kl_sum = 0.0;
@@ -157,10 +170,13 @@ fn samples(events: &[Event], cadence_sliding: bool) -> (Vec<(u64, f64, f64)>, f6
         for (idx, e) in events.iter().enumerate() {
             let t = (idx + 1) as u64;
             win_ts.push_back(e.timestamp);
+            win_priv.push_back((e.privilege_level >= 2) as u8);
             while let Some(&f) = win_ts.front() {
-                if f <= e.timestamp - TAU { win_ts.pop_front(); } else { break; }
+                if f <= e.timestamp - TAU { win_ts.pop_front(); win_priv.pop_front(); } else { break; }
             }
             let z1 = (win_ts.len() as f64 - rate_est * TAU) / (rate_est * TAU).sqrt();
+            let c3: f64 = win_priv.iter().map(|&b| b as f64).sum();
+            let z3 = (c3 - lam3 * TAU) / (lam3 * TAU).sqrt();
 
             if win_types.len() == 256 {
                 let old = win_types.pop_front().unwrap();
@@ -192,19 +208,23 @@ fn samples(events: &[Event], cadence_sliding: bool) -> (Vec<(u64, f64, f64)>, f6
             if (idx + 1) <= bi || kl_n < 50 {
                 continue;
             }
-            out.push((t, z1, (kl - kl_mean) / kl_std));
+            out.push((t, z1, (kl - kl_mean) / kl_std, z3));
         }
         return (out, rate_est, 0, 0);
     }
 
     // ---- 配对滚动窗（tumble）：不重叠 τ 时间窗 ----
-    let mut windows: Vec<(u64, f64, f64, f64)> = Vec::new(); // (t_end, count, len, kl)
+    let mut windows: Vec<(u64, f64, f64, f64, f64)> = Vec::new(); // (t_end, count, len, kl, priv_cnt)
     {
         let mut w_start = events[0].timestamp;
         let mut count = 0u32;
+        let mut priv_cnt = 0u32;
         let mut bins = [0u32; N_TYPES];
         for (idx, e) in events.iter().enumerate() {
             count += 1;
+            if e.privilege_level >= 2 {
+                priv_cnt += 1;
+            }
             bins[e.action_type as usize] += 1;
             if e.timestamp - w_start >= TAU {
                 let len = e.timestamp - w_start;
@@ -214,9 +234,10 @@ fn samples(events: &[Event], cadence_sliding: bool) -> (Vec<(u64, f64, f64)>, f6
                     let q = (bins[i] as f64 + EPS_KL * nw) / (nw * (1.0 + EPS_KL * N_TYPES as f64));
                     kl += q * (q / P0_WEIGHTS[i]).ln();
                 }
-                windows.push(((idx + 1) as u64, count as f64, len, kl));
+                windows.push(((idx + 1) as u64, count as f64, len, kl, priv_cnt as f64));
                 w_start = e.timestamp;
                 count = 0;
+                priv_cnt = 0;
                 bins = [0u32; N_TYPES];
             }
         }
@@ -225,15 +246,20 @@ fn samples(events: &[Event], cadence_sliding: bool) -> (Vec<(u64, f64, f64)>, f6
     let cc: f64 = windows[..calib].iter().map(|w| w.1).sum();
     let tt: f64 = windows[..calib].iter().map(|w| w.2).sum();
     rate_est = if tt > 0.0 { cc / tt } else { 1.0 };
+    let pc: f64 = windows[..calib].iter().map(|w| w.4).sum();
+    let rate3_est = if tt > 0.0 { pc / tt } else { 1e-12 };
 
     let mut z1s = Vec::new();
     let mut kls = Vec::new();
+    let mut z3s = Vec::new();
     for w in &windows[..calib] {
         z1s.push(z1_of(w.1, w.2, rate_est));
         kls.push(w.3);
+        z3s.push(z1_of(w.4, w.2, rate3_est));
     }
     let (s1_mean, s1_std) = mean_std(&z1s);
     let (kl_mean, kl_std) = mean_std(&kls);
+    let (s3_mean, s3_std) = mean_std(&z3s);
 
     for (i, w) in windows.iter().enumerate() {
         if i < calib {
@@ -241,7 +267,8 @@ fn samples(events: &[Event], cadence_sliding: bool) -> (Vec<(u64, f64, f64)>, f6
         }
         let x1 = (z1_of(w.1, w.2, rate_est) - s1_mean) / s1_std.max(1e-12);
         let x2 = (w.3 - kl_mean) / kl_std.max(1e-12);
-        out.push((w.0, x1, x2));
+        let x3 = (z1_of(w.4, w.2, rate3_est) - s3_mean) / s3_std.max(1e-12);
+        out.push((w.0, x1, x2, x3));
     }
     (out, rate_est, calib, windows.len())
 }
@@ -259,10 +286,10 @@ fn mean_std(xs: &[f64]) -> (f64, f64) {
     (m, v.sqrt())
 }
 
-fn run_cusums(sm: &[(u64, f64, f64)]) -> Vec<Alarm> {
+fn run_cusums(sm: &[(u64, f64, f64, f64)]) -> Vec<Alarm> {
     let mut c1: Vec<Cusum> = H_GRID.iter().map(|&h| Cusum::new(h)).collect();
     let mut c2: Vec<Cusum> = H_GRID.iter().map(|&h| Cusum::new(h)).collect();
-    for &(t, x1, x2) in sm {
+    for &(t, x1, x2, _) in sm {
         for i in 0..H_GRID.len() {
             c1[i].update(x1, t);
             c2[i].update(x2, t);
@@ -279,11 +306,47 @@ fn run_cusums(sm: &[(u64, f64, f64)]) -> Vec<Alarm> {
         .collect()
 }
 
+#[derive(Clone, Copy, Default)]
+struct AlarmSB {
+    s2b: Option<u64>,
+    or_sb: Option<u64>,
+    and_sb: Option<u64>,
+}
+
+/// pair 变体（s₂b，v0.4 增量）：s₂b 单支 + 与 s₁ 的 OR/AND 组合。
+/// 独立函数、独立遍历——既有 s1/s2a 数学与其输出逐位不动。
+fn run_cusums_sb(sm: &[(u64, f64, f64, f64)]) -> Vec<AlarmSB> {
+    let mut c1: Vec<Cusum> = H_GRID.iter().map(|&h| Cusum::new(h)).collect();
+    let mut c3: Vec<Cusum> = H_GRID.iter().map(|&h| Cusum::new(h)).collect();
+    for &(t, x1, _x2, x3) in sm {
+        for i in 0..H_GRID.len() {
+            c1[i].update(x1, t);
+            c3[i].update(x3, t);
+        }
+    }
+    (0..H_GRID.len())
+        .map(|i| {
+            let (a1, a3) = (c1[i].alarm, c3[i].alarm);
+            let or_sb = match (a1, a3) {
+                (Some(a), Some(b)) => Some(a.min(b)),
+                (Some(a), None) => Some(a),
+                (None, Some(b)) => Some(b),
+                (None, None) => None,
+            };
+            let and_sb = match (a1, a3) {
+                (Some(a), Some(b)) => Some(a.max(b)),
+                _ => None,
+            };
+            AlarmSB { s2b: a3, or_sb, and_sb }
+        })
+        .collect()
+}
+
 /// 单一 h 的双信号报警（run 模式用；与 run_cusums 同一数学，仅取一个 h）。
-fn cusum_alarms_h(sm: &[(u64, f64, f64)], h: f64) -> Alarm {
+fn cusum_alarms_h(sm: &[(u64, f64, f64, f64)], h: f64) -> Alarm {
     let mut c1 = Cusum::new(h);
     let mut c2 = Cusum::new(h);
-    for &(t, x1, x2) in sm {
+    for &(t, x1, x2, _) in sm {
         c1.update(x1, t);
         c2.update(x2, t);
     }
@@ -657,7 +720,7 @@ fn main() {
     let sliding = cadence == "sliding";
 
     let t0 = Instant::now();
-    println!("# agent_trail (E3) v0.3: generator + paired tumbling dual signal + online CUSUM + epoch state machine");
+    println!("# agent_trail (E3) v0.4: generator + paired tumbling tri-signal (s1,s2a,s2b) + online CUSUM + epoch state machine");
     println!("# schema: t, action_type(8), payload_hash(32B), timestamp, privilege_level; b=1");
     println!("# mode={mode} N={n} seed={seed} drift_at={drift_at} delta_rate={delta_rate} drift_type={drift_type}");
     println!("# cadence={cadence} tau={TAU} eps_kl={EPS_KL} k={K_CUSUM} calib_windows={CALIB_WINDOWS}");
@@ -671,12 +734,22 @@ fn main() {
         let nseeds: usize = args.get(1).map(|s| s.parse().expect("nseeds")).unwrap_or(500);
         let n_ev: usize = args.get(2).map(|s| s.parse().expect("N")).unwrap_or(10_000);
         let mut hits = [[0usize; 3]; H_GRID.len()];
+        let mut hits_sb = [[0usize; 3]; H_GRID.len()]; // (s2b, OR{s1,s2b}, AND{s1,s2b})
         let mut rho_sum = 0.0;
         let mut rho_n = 0usize;
+        // v0.4 pair 变体：s₂b 对逐 seed Pearson（s1×s2b、s2a×s2b）+ 跨 seed pooled 累计
+        let mut rho13_sum = 0.0;
+        let mut rho13_n = 0usize;
+        let mut rho23_sum = 0.0;
+        let mut rho23_n = 0usize;
+        #[allow(clippy::type_complexity)]
+        let (mut p_n, mut p_sx1, mut p_sx2, mut p_sx3, mut p_sx1x2, mut p_sx1x3, mut p_sx2x3, mut p_sx1q, mut p_sx2q, mut p_sx3q) =
+            (0f64, 0f64, 0f64, 0f64, 0f64, 0f64, 0f64, 0f64, 0f64, 0f64);
         for s in 0..nseeds {
             let ev = gen_events(n_ev, 20260920 + s as u64, 0, 0.0, false);
             let (sm, _rate, _cw, _nw) = samples(&ev, sliding);
             let alarms = run_cusums(&sm);
+            let alarms_sb = run_cusums_sb(&sm);
             for i in 0..H_GRID.len() {
                 let or = match (alarms[i].s1, alarms[i].s2a) {
                     (Some(a), Some(b)) => Some(a.min(b)),
@@ -687,10 +760,14 @@ fn main() {
                 if alarms[i].s1.is_some() { hits[i][0] += 1; }
                 if alarms[i].s2a.is_some() { hits[i][1] += 1; }
                 if or.is_some() { hits[i][2] += 1; }
+                if alarms_sb[i].s2b.is_some() { hits_sb[i][0] += 1; }
+                if alarms_sb[i].or_sb.is_some() { hits_sb[i][1] += 1; }
+                if alarms_sb[i].and_sb.is_some() { hits_sb[i][2] += 1; }
             }
             if sm.len() > 10 {
                 let x1: Vec<f64> = sm.iter().map(|v| v.1).collect();
                 let x2: Vec<f64> = sm.iter().map(|v| v.2).collect();
+                let x3: Vec<f64> = sm.iter().map(|v| v.3).collect();
                 let (m1, s1) = mean_std(&x1);
                 let (m2, s2) = mean_std(&x2);
                 if s1 > 0.0 && s2 > 0.0 {
@@ -703,16 +780,68 @@ fn main() {
                     rho_sum += c / (s1 * s2);
                     rho_n += 1;
                 }
+                let (m3, s3) = mean_std(&x3);
+                if s1 > 0.0 && s3 > 0.0 {
+                    let c: f64 = x1
+                        .iter()
+                        .zip(x3.iter())
+                        .map(|(a, b)| (a - m1) * (b - m3))
+                        .sum::<f64>()
+                        / x1.len() as f64;
+                    rho13_sum += c / (s1 * s3);
+                    rho13_n += 1;
+                }
+                if s2 > 0.0 && s3 > 0.0 {
+                    let c: f64 = x2
+                        .iter()
+                        .zip(x3.iter())
+                        .map(|(a, b)| (a - m2) * (b - m3))
+                        .sum::<f64>()
+                        / x2.len() as f64;
+                    rho23_sum += c / (s2 * s3);
+                    rho23_n += 1;
+                }
+                for ((a, b), c3) in x1.iter().zip(x2.iter()).zip(x3.iter()) {
+                    p_n += 1.0;
+                    p_sx1 += a;
+                    p_sx2 += b;
+                    p_sx3 += c3;
+                    p_sx1q += a * a;
+                    p_sx2q += b * b;
+                    p_sx3q += c3 * c3;
+                    p_sx1x2 += a * b;
+                    p_sx1x3 += a * c3;
+                    p_sx2x3 += b * c3;
+                }
             }
         }
+        let pooled = |sx: f64, sy: f64, sxy: f64, sxq: f64, syq: f64, n: f64| -> f64 {
+            let cov = n * sxy - sx * sy;
+            let vx = n * sxq - sx * sx;
+            let vy = n * syq - sy * sy;
+            if vx > 0.0 && vy > 0.0 { cov / (vx * vy).sqrt() } else { f64::NAN }
+        };
         println!("nseeds: {nseeds} n_per_seed: {n_ev}");
         println!("rho_hat_h0: {:.4} (n={rho_n})", if rho_n > 0 { rho_sum / rho_n as f64 } else { f64::NAN });
+        println!("rho_hat_h0_s1s2b: {:.4} (n={rho13_n})", if rho13_n > 0 { rho13_sum / rho13_n as f64 } else { f64::NAN });
+        println!("rho_hat_h0_s2as2b: {:.4} (n={rho23_n})", if rho23_n > 0 { rho23_sum / rho23_n as f64 } else { f64::NAN });
+        println!("rho_pooled_s1s2a: {:.4} (m={})", pooled(p_sx1, p_sx2, p_sx1x2, p_sx1q, p_sx2q, p_n), p_n as u64);
+        println!("rho_pooled_s1s2b: {:.4} (m={})", pooled(p_sx1, p_sx3, p_sx1x3, p_sx1q, p_sx3q, p_n), p_n as u64);
+        println!("rho_pooled_s2as2b: {:.4} (m={})", pooled(p_sx2, p_sx3, p_sx2x3, p_sx2q, p_sx3q, p_n), p_n as u64);
         println!("# FAR (%) per h — s1-only | s2a-only | OR");
         for (i, &h) in H_GRID.iter().enumerate() {
             let f = |x: usize| 100.0 * x as f64 / nseeds as f64;
             println!(
                 "far_h{h:.0}: s1={:.2} s2a={:.2} OR={:.2}",
                 f(hits[i][0]), f(hits[i][1]), f(hits[i][2])
+            );
+        }
+        println!("# FAR (%) per h — pair variant: s2b-only | OR{{s1,s2b}} | AND{{s1,s2b}}");
+        for (i, &h) in H_GRID.iter().enumerate() {
+            let f = |x: usize| 100.0 * x as f64 / nseeds as f64;
+            println!(
+                "farsb_h{h:.0}: s2b={:.2} ORsb={:.2} ANDsb={:.2}",
+                f(hits_sb[i][0]), f(hits_sb[i][1]), f(hits_sb[i][2])
             );
         }
         println!("wall_ms: {:.0}", t0.elapsed().as_secs_f64() * 1e3);
@@ -724,14 +853,18 @@ fn main() {
     let events = gen_events(n, seed, drift_at, delta_rate, drift_type);
     let (sm, rate_est, cw, nw) = samples(&events, sliding);
     let alarms = run_cusums(&sm);
+    let alarms_sb = run_cusums_sb(&sm);
     let x1: Vec<f64> = sm.iter().map(|v| v.1).collect();
     let x2: Vec<f64> = sm.iter().map(|v| v.2).collect();
+    let x3: Vec<f64> = sm.iter().map(|v| v.3).collect();
     let (m1, sd1) = mean_std(&x1);
     let (m2, sd2) = mean_std(&x2);
+    let (m3, sd3) = mean_std(&x3);
     println!("rate_est: {rate_est:.6}");
     println!("windows: calib={cw} total={nw} scored={}", sm.len());
     println!("x1_scored: mean={m1:.4} std={sd1:.4}");
     println!("x2_scored: mean={m2:.4} std={sd2:.4}");
+    println!("x3_scored: mean={m3:.4} std={sd3:.4}  # s2b (priv>=2 z)");
     println!("# h grid: s1-only | s2a-only | OR(min)");
     for (i, &h) in H_GRID.iter().enumerate() {
         let or = match (alarms[i].s1, alarms[i].s2a) {
@@ -741,6 +874,13 @@ fn main() {
             (None, None) => None,
         };
         println!("alarm_h{h:.0}: s1={} s2a={} OR={}", fmt(alarms[i].s1), fmt(alarms[i].s2a), fmt(or));
+    }
+    println!("# h grid pair variant: s2b-only | OR{{s1,s2b}} | AND{{s1,s2b}}");
+    for (i, &h) in H_GRID.iter().enumerate() {
+        println!(
+            "alarm_h{h:.0}_sb: s2b={} ORsb={} ANDsb={}",
+            fmt(alarms_sb[i].s2b), fmt(alarms_sb[i].or_sb), fmt(alarms_sb[i].and_sb)
+        );
     }
     println!("wall_ms: {:.1}", t0.elapsed().as_secs_f64() * 1e3);
     println!("all_done");
