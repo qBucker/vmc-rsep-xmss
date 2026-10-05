@@ -3,9 +3,9 @@
 可验证单调链（VMC）的生产级实现，实例化为带状态生命周期证明的
 XMSS 有状态哈希签名。
 
-> **参考**：Anonymous, *Verifiable Monotone Chains: A Primitive for
-> Cryptographically Enforced State Lifecycles, with an Application to
-> XMSS*.
+> **参考**：Anonymous, *Monotone Accountability: A New Foundation for
+> Verifiable Records and Epoch Transitions*（预印本；概念 DOI 始终指向
+> 最新版：<https://doi.org/10.5281/zenodo.22987527>）。
 
 ## 概述
 
