@@ -1,0 +1,12 @@
+# slhdsa bench (E1): pqcrypto-sphincsplus 0.7.2 (PQClean clean, AVX2 feature off)
+# msg=0x77*32; keygen_n=10, sign_n=1000, verify_n=1000; single-threaded; 1 warmup per phase
+variant: SLH-DSA-SHA2-192f (sphincs-sha2-192f-simple)
+public_key_bytes: 48
+secret_key_bytes: 96
+signature_bytes: 35664
+keygen_ms: min=0.347 q1=0.355 med=0.357 q3=0.360 max=0.388 (n=10)
+sign_ms: min=9.312 q1=9.636 med=9.724 q3=9.910 max=12.623 (n=1000)
+verify_ms: min=0.621 q1=0.635 med=0.641 q3=0.652 max=1.619 (n=1000)
+vmhwm_kib: 2240
+variant_wall_ms: 10505.7
+all_done

@@ -42,6 +42,10 @@ std = [
 hex = "0.4"
 hex-literal = "0.4"
 criterion = { version = "0.5", features = ["html_reports"] }
+# E1: SLH-DSA (SPHINCS+) reference-C comparison baseline for the paper's Table 2
+pqcrypto-sphincsplus = "0.7.2"
+# E3: 2-of-3 governance quorum mock (SEAL) for the agent-trail simulation
+ed25519-dalek = "2"
 
 [[bench]]
 name = "rsep"
