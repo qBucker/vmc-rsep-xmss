@@ -1,0 +1,35 @@
+# agent_trail (E3) v0.4: generator + paired tumbling tri-signal (s1,s2a,s2b) + online CUSUM + epoch state machine
+# schema: t, action_type(8), payload_hash(32B), timestamp, privilege_level; b=1
+# mode=calib N=200 seed=10000 drift_at=0 delta_rate=0 drift_type=false
+# cadence=sliding tau=64 eps_kl=0.001 k=0.5 calib_windows=40
+nseeds: 200 n_per_seed: 10000
+rho_hat_h0: -0.0001 (n=200)
+rho_hat_h0_s1s2b: 0.5098 (n=200)
+rho_hat_h0_s2as2b: 0.0138 (n=200)
+rho_pooled_s1s2a: 0.0162 (m=1900000)
+rho_pooled_s1s2b: 0.5129 (m=1900000)
+rho_pooled_s2as2b: 0.0323 (m=1900000)
+# FAR (%) per h — s1-only | s2a-only | OR
+far_h4: s1=100.00 s2a=100.00 OR=100.00
+far_h6: s1=100.00 s2a=100.00 OR=100.00
+far_h8: s1=100.00 s2a=100.00 OR=100.00
+far_h10: s1=100.00 s2a=100.00 OR=100.00
+far_h12: s1=100.00 s2a=100.00 OR=100.00
+far_h14: s1=100.00 s2a=100.00 OR=100.00
+far_h16: s1=100.00 s2a=100.00 OR=100.00
+far_h18: s1=100.00 s2a=100.00 OR=100.00
+far_h20: s1=100.00 s2a=100.00 OR=100.00
+far_h24: s1=100.00 s2a=99.50 OR=100.00
+# FAR (%) per h — pair variant: s2b-only | OR{s1,s2b} | AND{s1,s2b}
+farsb_h4: s2b=100.00 ORsb=100.00 ANDsb=100.00
+farsb_h6: s2b=100.00 ORsb=100.00 ANDsb=100.00
+farsb_h8: s2b=100.00 ORsb=100.00 ANDsb=100.00
+farsb_h10: s2b=100.00 ORsb=100.00 ANDsb=100.00
+farsb_h12: s2b=100.00 ORsb=100.00 ANDsb=100.00
+farsb_h14: s2b=100.00 ORsb=100.00 ANDsb=100.00
+farsb_h16: s2b=100.00 ORsb=100.00 ANDsb=100.00
+farsb_h18: s2b=100.00 ORsb=100.00 ANDsb=100.00
+farsb_h20: s2b=100.00 ORsb=100.00 ANDsb=100.00
+farsb_h24: s2b=100.00 ORsb=100.00 ANDsb=100.00
+wall_ms: 597
+all_done
