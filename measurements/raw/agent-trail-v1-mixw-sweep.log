@@ -1,0 +1,17 @@
+# E3 symmetric-anchoring sweep (10-05; drift_at=2700; user decision: symmetric mu1 with Table 2)
+# type-channel solo (delta_rate=0, drift_type=1), x2 shift vs mix weight AT_MIXW:
+mixw=0.05  x2_scored: mean=-0.0378 std=1.1241
+mixw=0.075  x2_scored: mean=-0.0313 std=1.1325
+mixw=0.1  x2_scored: mean=0.1218 std=1.2611
+mixw=0.125  x2_scored: mean=0.2486 std=1.3898
+mixw=0.15  x2_scored: mean=0.3637 std=1.3508
+mixw=0.2  x2_scored: mean=0.8776 std=1.5614
+mixw=0.25  x2_scored: mean=1.2499 std=1.6238
+mixw=0.3  x2_scored: mean=1.8225 std=1.8788
+# composite channel (delta_rate=0.14, drift_type=1):
+mixw=0.09  x1_scored: mean=0.9830 std=1.1497 x2_scored: mean=-0.1507 std=1.0358 
+mixw=0.1  x1_scored: mean=0.9830 std=1.1497 x2_scored: mean=-0.0817 std=1.0424 
+mixw=0.25  x1_scored: mean=0.9830 std=1.1497 x2_scored: mean=0.9853 std=1.4083 
+mixw=0.28  x1_scored: mean=0.9830 std=1.1497 x2_scored: mean=1.2823 std=1.4496 
+mixw=0.3  x1_scored: mean=0.9830 std=1.1497 x2_scored: mean=1.5512 std=1.4979 
+# ANCHOR: (delta_rate=0.14, mixw=0.25) -> (x1=0.983, x2=0.985)
