@@ -1,0 +1,21 @@
+# agent_trail (E3) v0.2-impl: paired tumbling-window dual signal + online CUSUM
+# schema: t, action_type(8), payload_hash(32B), timestamp, privilege_level; b=1
+# mode=drift N=10000 seed=20260920 drift_at=5000 delta_rate=0.125 drift_type=true
+# cadence=tumble tau=64 eps_kl=0.001 k=0.5 calib_windows=40
+rate_est: 1.020835
+windows: calib=40 total=145 scored=105
+x1_scored: mean=0.4553 std=1.3221
+x2_scored: mean=3.3117 std=3.2329
+# h grid: s1-only | s2a-only | OR(min)
+alarm_h4: s1=t=5536 s2a=t=5084 OR=t=5084
+alarm_h6: s1=t=5700 s2a=t=5164 OR=t=5164
+alarm_h8: s1=t=5700 s2a=t=5235 OR=t=5235
+alarm_h10: s1=t=5921 s2a=t=5235 OR=t=5235
+alarm_h12: s1=t=6006 s2a=t=5305 OR=t=5305
+alarm_h14: s1=t=6932 s2a=t=5305 OR=t=5305
+alarm_h16: s1=t=7020 s2a=t=5305 OR=t=5305
+alarm_h18: s1=t=7095 s2a=t=5378 OR=t=5378
+alarm_h20: s1=t=8230 s2a=t=5378 OR=t=5378
+alarm_h24: s1=t=9378 s2a=t=5459 OR=t=5459
+wall_ms: 0.4
+all_done
