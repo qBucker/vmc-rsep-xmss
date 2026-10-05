@@ -1,0 +1,16 @@
+# baseline probe: plain XMSS core vs RSEP-XMSS (same session)
+# rsep-xmss baseline: h=10, iters=5, msg=0x77*32
+# prof=release; poseidon-domain=b"measure"
+hash2_ms: min=0.014 med=0.015 max=0.171 (n=1000)
+keygen_ms: 116203.004
+xmss_sign_ms: min=43.840 med=44.252 max=44.791 (n=5)
+xmss_verify_ms: min=61.035 med=62.010 max=64.617 (n=5)
+rsep_sign_ms: min=327.453 med=339.661 max=355.324 (n=5)
+rsep_groth16_verify_ms: min=1.165 med=1.183 max=1.436 (n=5)
+rsep_verify_ms: min=65.622 med=66.233 max=67.005 (n=5)
+xmss_sig_bytes: 2472
+pi_bytes: 128
+vk_bytes: 424
+rsep_sig_extra_bytes: 168  # pi + c + root'
+rsep_sig_total_bytes: 2640
+wall_total_ms: 118800.644
