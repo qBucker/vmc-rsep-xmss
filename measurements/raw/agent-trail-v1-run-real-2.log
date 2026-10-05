@@ -1,0 +1,210 @@
+warning: unused import: `ark_relations::r1cs::ConstraintSynthesizer`
+  --> src/proof.rs:24:5
+   |
+24 | use ark_relations::r1cs::ConstraintSynthesizer;
+   |     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+   |
+   = note: `#[warn(unused_imports)]` (part of `#[warn(unused)]`) on by default
+
+warning: unused import: `ark_ff::PrimeField`
+  --> src/rsep.rs:13:5
+   |
+13 | use ark_ff::PrimeField;
+   |     ^^^^^^^^^^^^^^^^^^
+
+warning: unused import: `Blake2b512`
+  --> src/wots.rs:24:14
+   |
+24 | use blake2::{Blake2b512, Digest};
+   |              ^^^^^^^^^^
+
+warning: unused import: `self`
+  --> src/xmss.rs:16:5
+   |
+16 |     self, expand_seed, h2, ltree, message_digits, pk_from_sk, pk_from_sig,
+   |     ^^^^
+
+warning: unused import: `Digest`
+  --> src/wots.rs:24:26
+   |
+24 | use blake2::{Blake2b512, Digest};
+   |                          ^^^^^^
+
+warning: unused import: `ark_ff::Zero`
+  --> src/xmss.rs:20:5
+   |
+20 | use ark_ff::Zero;
+   |     ^^^^^^^^^^^^
+
+warning: variable does not need to be mutable
+  --> src/poseidon.rs:51:13
+   |
+51 |         let mut next = |label: u8, idx: u64| -> Fr {
+   |             ----^^^^
+   |             |
+   |             help: remove this `mut`
+   |
+   = note: `#[warn(unused_mut)]` (part of `#[warn(unused)]`) on by default
+
+warning: missing documentation for a struct field
+  --> src/errors.rs:11:27
+   |
+11 |     LeafIndexOutOfRange { index: u64, h: u8 },
+   |                           ^^^^^^^^^^
+   |
+note: the lint level is defined here
+  --> src/lib.rs:17:9
+   |
+17 | #![warn(missing_docs)]
+   |         ^^^^^^^^^^^^
+
+warning: missing documentation for a struct field
+  --> src/errors.rs:11:39
+   |
+11 |     LeafIndexOutOfRange { index: u64, h: u8 },
+   |                                       ^^^^^
+
+warning: missing documentation for a struct field
+  --> src/errors.rs:15:25
+   |
+15 |     LeafStateMismatch { index: u64, expected: LeafState },
+   |                         ^^^^^^^^^^
+
+warning: missing documentation for a struct field
+  --> src/errors.rs:15:37
+   |
+15 |     LeafStateMismatch { index: u64, expected: LeafState },
+   |                                     ^^^^^^^^^^^^^^^^^^^
+
+warning: missing documentation for a struct field
+  --> src/errors.rs:19:23
+   |
+19 |     CounterRollback { offered: u64, current: u64 },
+   |                       ^^^^^^^^^^^^
+
+warning: missing documentation for a struct field
+  --> src/errors.rs:19:37
+   |
+19 |     CounterRollback { offered: u64, current: u64 },
+   |                                     ^^^^^^^^^^^^
+
+warning: `rsep-xmss` (lib) generated 13 warnings (run `cargo fix --lib -p rsep-xmss` to apply 5 suggestions)
+warning: variable does not need to be mutable
+   --> examples/agent_trail.rs:144:9
+    |
+144 |     let mut rate_est;
+    |         ----^^^^^^^^
+    |         |
+    |         help: remove this `mut`
+    |
+    = note: `#[warn(unused_mut)]` (part of `#[warn(unused)]`) on by default
+
+warning: variable does not need to be mutable
+   --> examples/agent_trail.rs:146:9
+    |
+146 |     let mut kl_win: Vec<f64> = Vec::new();
+    |         ----^^^^^^
+    |         |
+    |         help: remove this `mut`
+
+warning: variable does not need to be mutable
+   --> examples/agent_trail.rs:147:9
+    |
+147 |     let mut s1_win: Vec<f64> = Vec::new();
+    |         ----^^^^^^
+    |         |
+    |         help: remove this `mut`
+
+warning: variable does not need to be mutable
+   --> examples/agent_trail.rs:150:9
+    |
+150 |     let mut s1_mean = 0.0;
+    |         ----^^^^^^^
+    |         |
+    |         help: remove this `mut`
+
+warning: variable does not need to be mutable
+   --> examples/agent_trail.rs:151:9
+    |
+151 |     let mut s1_std = 1.0;
+    |         ----^^^^^^
+    |         |
+    |         help: remove this `mut`
+
+warning: unused variable: `kl_win`
+   --> examples/agent_trail.rs:146:9
+    |
+146 |     let mut kl_win: Vec<f64> = Vec::new();
+    |         ^^^^^^^^^^ help: if this is intentional, prefix it with an underscore: `_kl_win`
+    |
+    = note: `#[warn(unused_variables)]` (part of `#[warn(unused)]`) on by default
+
+warning: unused variable: `s1_win`
+   --> examples/agent_trail.rs:147:9
+    |
+147 |     let mut s1_win: Vec<f64> = Vec::new();
+    |         ^^^^^^^^^^ help: if this is intentional, prefix it with an underscore: `_s1_win`
+
+warning: unused variable: `s1_mean`
+   --> examples/agent_trail.rs:150:9
+    |
+150 |     let mut s1_mean = 0.0;
+    |         ^^^^^^^^^^^ help: if this is intentional, prefix it with an underscore: `_s1_mean`
+
+warning: unused variable: `s1_std`
+   --> examples/agent_trail.rs:151:9
+    |
+151 |     let mut s1_std = 1.0;
+    |         ^^^^^^^^^^ help: if this is intentional, prefix it with an underscore: `_s1_std`
+
+warning: unused variable: `p`
+   --> examples/agent_trail.rs:442:24
+    |
+442 | fn exhaustion_evidence(p: &PoseidonParams, ep: &mut EpochRT, rng: &mut ChaCha20Rng) -> [u8; 32] {
+    |                        ^ help: if this is intentional, prefix it with an underscore: `_p`
+
+warning: field `and` is never read
+   --> examples/agent_trail.rs:118:5
+    |
+115 | struct Alarm {
+    |        ----- field in this struct
+...
+118 |     and: Option<u64>,
+    |     ^^^
+    |
+    = note: `Alarm` has a derived impl for the trait `Clone`, but this is intentionally ignored during dead code analysis
+    = note: `#[warn(dead_code)]` (part of `#[warn(unused)]`) on by default
+
+warning: fields `t_seal` and `seal_wall_us` are never read
+   --> examples/agent_trail.rs:403:5
+    |
+397 | struct PendingSeal {
+    |        ----------- fields in this struct
+...
+403 |     t_seal: u64,
+    |     ^^^^^^
+404 |     seal_wall_us: f64,
+    |     ^^^^^^^^^^^^
+
+warning: `rsep-xmss` (example "agent_trail") generated 12 warnings (run `cargo fix --example "agent_trail" -p rsep-xmss` to apply 10 suggestions)
+    Finished `release` profile [optimized] target(s) in 0.30s
+     Running `target/release/examples/agent_trail run 10000 20260920 5000 0.125 1`
+# agent_trail (E3) v0.4: generator + paired tumbling tri-signal (s1,s2a,s2b) + online CUSUM + epoch state machine
+# schema: t, action_type(8), payload_hash(32B), timestamp, privilege_level; b=1
+# mode=run N=10000 seed=20260920 drift_at=5000 delta_rate=0.125 drift_type=true
+# cadence=tumble tau=64 eps_kl=0.001 k=0.5 calib_windows=40
+# agent_trail RUN mode (full loop)
+# N=10000 seed=20260920 drift_at=5000 delta_rate=0.125 drift_type=true
+# h_tree=10 (leaves/epoch=1024) hstar=18 W=100 sign=real
+rate_est: 1.020835  windows: calib=40 total=145 scored=105
+s1_first_cross: t=6568  s2_first_cross: t=3363
+cusum: h=18 s1=t=7095 s2a=t=5378 OR=t=5378
+commits: 10000  queued_delayed: 1000  max_queue: 100
+final_epoch: 10  (exhaustion transitions: 9)
+exhaustion_marks: [(1024, 0), (2048, 1), (3072, 2), (4096, 3), (5120, 4), (6401, 6), (7425, 7), (8449, 8), (9473, 9)]
+anomaly_sequence: [(5378, "cusum_trigger"), (5378, "seal_quorum_2of3"), (5477, "window_close"), (5477, "spawn_done"), (5477, "drain_done")]
+detection_delay_events: 378 (drift_at=5000)
+wall_commit_ms: 3315421.6  wall_keygen_ms: 1094001.4  wall_finalize_ms: 2510.0
+wall_total_ms: 4562746.9
+timeline_csv: out/agent-trail-run-seed20260920.csv
+all_done
