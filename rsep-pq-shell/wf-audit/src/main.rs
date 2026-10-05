@@ -1,7 +1,7 @@
 //! Winterfell STARK 审计链演示 —— VMC/RSEP-XMSS 后量子外壳对冲轨。
 //!
 //! 语句（对应 V6 论文 §8 审计链）：C_t = P([C_{t-1}, B_t, DS])[0]，
-//! 其中 P 为 Poseidon 置换的 Goldilocks f64 实例，T = 32 个审计块，
+//! 其中 P 为 Poseidon 置换的 Goldilocks f64 实例，T 个审计块（默认 32，可用 WF_T_BLOCKS 覆盖），
 //! 公开输入 = (C_0, C_T)，见证 = {B_t} 与全部中间状态。
 //!
 //! 诚实边界（务必随数字一起引用）：
@@ -42,9 +42,8 @@ const HALF_FULL: usize = FULL_ROUNDS / 2; // 4
 
 /// 块布局：行 0..=64 为轮次行，行 65 为输出行，行 66..=127 为 idle 行。
 const BLOCK_ROWS: usize = 128;
-/// 审计链块数。
-const T_BLOCKS: usize = 32;
-const TRACE_LEN: usize = BLOCK_ROWS * T_BLOCKS; // 4096
+/// 审计链块数（默认值；运行期可用环境变量 WF_T_BLOCKS 覆盖，用于规模化扫描）。
+const T_BLOCKS_DEFAULT: usize = 32;
 
 /// Goldilocks 模数 p = 2^64 - 2^32 + 1。
 const P_MOD: u64 = 0xFFFF_FFFF_0000_0001;
@@ -353,19 +352,24 @@ impl Prover for AuditProver {
 // ---------------------------------------------------------------------------
 
 fn main() {
+    let t_blocks: usize = std::env::var("WF_T_BLOCKS")
+        .ok()
+        .and_then(|s| s.parse().ok())
+        .unwrap_or(T_BLOCKS_DEFAULT);
+    let trace_len: usize = BLOCK_ROWS * t_blocks;
     println!("=== Winterfell STARK 审计链演示（工程演示参数，非安全参数集）===");
-    println!("语句: C_t = P([C_{{t-1}}, B_t, DS])[0], T = {T_BLOCKS} 块, Poseidon-f64 (t=3, a=7, 8+57 轮)");
-    println!("迹: {STATE_WIDTH} 列 x {TRACE_LEN} 行（块 {BLOCK_ROWS} 行 = 65 轮 + 输出行 + idle）");
+    println!("语句: C_t = P([C_{{t-1}}, B_t, DS])[0], T = {t_blocks} 块, Poseidon-f64 (t=3, a=7, 8+57 轮)");
+    println!("迹: {STATE_WIDTH} 列 x {trace_len} 行（块 {BLOCK_ROWS} 行 = 65 轮 + 输出行 + idle）");
 
     let params = derive_params();
     // 演示审计消息：确定性可复现
-    let msgs: Vec<F> = (0..T_BLOCKS)
+    let msgs: Vec<F> = (0..t_blocks)
         .map(|t| F::new(0xA0D1_7000u64 + t as u64))
         .collect();
 
     // --- 构迹 ---
     let t_trace = Instant::now();
-    let mut trace = TraceTable::new(STATE_WIDTH, TRACE_LEN);
+    let mut trace = TraceTable::new(STATE_WIDTH, trace_len);
     {
         let params_ref = &params;
         let msgs_ref = &msgs;
@@ -393,7 +397,7 @@ fn main() {
 
     // --- 交叉核对 ---
     let expect_ct = audit_chain(&params, &msgs);
-    let ct = trace.get(0, TRACE_LEN - 1);
+    let ct = trace.get(0, trace_len - 1);
     assert_eq!(expect_ct, ct, "迹末值与参考链不一致（迹构造有 bug）");
     println!("C_0 = 0x{:016x}", u64::from(F::ZERO));
     println!("C_T = 0x{:016x} (trace {:.3} ms)", u64::from(ct), trace_ms);
@@ -440,8 +444,8 @@ fn main() {
     std::fs::write("out/wf-audit-proof.bin", &proof_bytes).unwrap();
     let summary = format!(
         "Winterfell STARK audit-chain demo (engineering parameters, not a secure parameter set)\n\
-         statement: C_t = P([C_{{t-1}}, B_t, DS])[0], T = {T_BLOCKS} blocks, Poseidon-f64 (t=3, alpha=7, 8F+57P)\n\
-         trace: {STATE_WIDTH} cols x {TRACE_LEN} rows; constraints: 7 (deg 7 base, cycles [128,128]); blowup 8\n\
+         statement: C_t = P([C_{{t-1}}, B_t, DS])[0], T = {t_blocks} blocks, Poseidon-f64 (t=3, alpha=7, 8F+57P)\n\
+         trace: {STATE_WIDTH} cols x {trace_len} rows; constraints: 7 (deg 7 base, cycles [128,128]); blowup 8\n\
          options: 42 queries, grinding 16, quadratic extension, FRI fold 4, remainder 63, Linear batching\n\
          C_T = 0x{:016x}\n\
          trace_build_ms = {trace_ms:.3}\n\
