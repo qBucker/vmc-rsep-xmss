@@ -1,0 +1,19 @@
+# agent_trail (E3) v0.3: generator + paired tumbling dual signal + online CUSUM + epoch state machine
+# schema: t, action_type(8), payload_hash(32B), timestamp, privilege_level; b=1
+# mode=run N=10000 seed=20260920 drift_at=5000 delta_rate=0.125 drift_type=true
+# cadence=tumble tau=64 eps_kl=0.001 k=0.5 calib_windows=40
+# agent_trail RUN mode (full loop)
+# N=10000 seed=20260920 drift_at=5000 delta_rate=0.125 drift_type=true
+# h_tree=10 (leaves/epoch=1024) hstar=18 W=100 sign=real
+rate_est: 1.020835  windows: calib=40 total=145 scored=105
+s1_first_cross: t=6568  s2_first_cross: t=3363
+cusum: h=18 s1=t=7095 s2a=t=5378 OR=t=5378
+commits: 10000  queued_delayed: 1000  max_queue: 100
+final_epoch: 10  (exhaustion transitions: 9)
+exhaustion_marks: [(1024, 0), (2048, 1), (3072, 2), (4096, 3), (5120, 4), (6401, 6), (7425, 7), (8449, 8), (9473, 9)]
+anomaly_sequence: [(5378, "cusum_trigger"), (5378, "seal_quorum_2of3"), (5477, "window_close"), (5477, "spawn_done"), (5477, "drain_done")]
+detection_delay_events: 378 (drift_at=5000)
+wall_commit_ms: 3291260.2  wall_keygen_ms: 1097002.9  wall_finalize_ms: 2537.7
+wall_total_ms: 4500858.3
+timeline_csv: out/agent-trail-run-seed20260920.csv
+all_done

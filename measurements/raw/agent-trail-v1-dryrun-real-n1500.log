@@ -1,0 +1,11 @@
+# agent-trail real dry-run N=1500 (host; self-gate STEP1 of the gated chain) — extracted from task output bjinbr8zw
+s1_first_cross: none  s2_first_cross: none
+cusum: h=18 s1=none s2a=none OR=none
+commits: 1500  queued_delayed: 100  max_queue: 100
+final_epoch: 1  (exhaustion transitions: 1)
+exhaustion_marks: [(1024, 0)]
+anomaly_sequence: none (no OR crossing at h=18)
+wall_commit_ms: 493989.6  wall_keygen_ms: 108568.8  wall_finalize_ms: 275.4
+wall_total_ms: 712933.9
+timeline_csv: out/agent-trail-run-seed777001.csv
+all_done

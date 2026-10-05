@@ -1,0 +1,19 @@
+# agent_trail (E3) v0.2-impl: paired tumbling-window dual signal + online CUSUM
+# schema: t, action_type(8), payload_hash(32B), timestamp, privilege_level; b=1
+# mode=calib N=500 seed=10000 drift_at=0 delta_rate=0 drift_type=false
+# cadence=tumble tau=64 eps_kl=0.001 k=0.5 calib_windows=40
+nseeds: 500 n_per_seed: 10000
+rho_hat_h0: -0.2291 (n=500)
+# FAR (%) per h — s1-only | s2a-only | OR
+far_h4: s1=38.60 s2a=61.80 OR=77.20
+far_h6: s1=14.20 s2a=30.40 OR=40.60
+far_h8: s1=4.20 s2a=15.40 OR=18.80
+far_h10: s1=0.80 s2a=7.60 OR=8.20
+far_h12: s1=0.60 s2a=3.80 OR=4.40
+far_h14: s1=0.40 s2a=1.60 OR=2.00
+far_h16: s1=0.40 s2a=1.00 OR=1.40
+far_h18: s1=0.40 s2a=0.60 OR=1.00
+far_h20: s1=0.40 s2a=0.40 OR=0.80
+far_h24: s1=0.20 s2a=0.40 OR=0.60
+wall_ms: 148
+all_done
