@@ -14,7 +14,7 @@ MEM    ?= 4g
 H      ?= 10
 RUN     = $(DOCKER) run --rm --cpus=$(CPUS) --memory=$(MEM) -v "$(PWD)/out:/work/out" $(IMAGE)
 
-.PHONY: image test measure measure-all baseline per-event cusum cusum-dual wf-audit reproduce-all clean
+.PHONY: image test measure measure-all baseline per-event cusum cusum-dual wf-audit scaling scaling-stark slh-bench agent-trail reproduce-all clean
 
 image:
 	$(DOCKER) build -t $(IMAGE) .
@@ -48,6 +48,22 @@ cusum-dual: image
 
 wf-audit: image
 	$(RUN) sh -c 'cd rsep-pq-shell/wf-audit && cargo run --release'
+
+scaling: image
+	mkdir -p out
+	$(RUN) bash scripts/scaling_sweep.sh groth16
+
+scaling-stark: image
+	mkdir -p out
+	$(RUN) bash scripts/scaling_sweep.sh stark
+
+slh-bench: image
+	mkdir -p out
+	$(RUN) bash scripts/slh_bench.sh
+
+agent-trail: image
+	mkdir -p out
+	$(RUN) bash scripts/agent_trail.sh
 
 reproduce-all: test cusum measure-all wf-audit
 
