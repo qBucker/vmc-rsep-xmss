@@ -3060,8 +3060,6 @@ dependencies = [
 [[package]]
 name = "risc0-circuit-keccak-sys"
 version = "4.0.3"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "7ca44fa0f46c2d0a2a3cbbb8cdfb9bc7941ec9baea0d1c8dff5e6710d890aee2"
 dependencies = [
  "cc",
  "derive_more",
@@ -3099,8 +3097,6 @@ dependencies = [
 [[package]]
 name = "risc0-circuit-recursion-sys"
 version = "4.0.3"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "d75beadf2a106377bb16bd000d3bde141b12c08aa47ba80c28e4068f379bb1ab"
 dependencies = [
  "glob",
  "risc0-build-kernel",
@@ -3145,8 +3141,6 @@ dependencies = [
 [[package]]
 name = "risc0-circuit-rv32im-sys"
 version = "4.0.3"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "e93ed1e691220660df5ac7af4864d8cf8a42e7fe615ef27171652658ec8cb9f1"
 dependencies = [
  "cc",
  "derive_more",
@@ -3351,6 +3345,7 @@ dependencies = [
  "bincode",
  "blake2",
  "risc0-binfmt",
+ "risc0-zkos-v1compat",
  "risc0-zkvm",
 ]
 

@@ -93,6 +93,9 @@ Poseidon over BN254 Fr **本身不弱量子**：哈希型原语只有 Grover 对
 
 ## 5. 论文更新点清单（待 RZ 数字落地后动刀，需用户裁决）
 
+> **状态更新（2026-10-05）**：以下四点已随主机全量复跑落地（数字见 §7）；论文收割
+> 全量执行、编译 32 页 0 undefined。清单保留为历史记录（§3.3 投影口径相应作废）。
+
 1. §2.3：PQ 迁移路径段落由「文献指针」升级为「实测背书」——审计链语句已有 STARK 实测（197.6 ms / 1.04 ms / 56.2 KiB，工程演示参数）；C_RSEP 语句的 zkVM 实测（RZ：50.9M cycles、单段 prove 5.5 min / receipt 249.8 KiB / verify 23.3 ms，全量 prove 22.4 h 为投影口径）。
 2. 措辞：PQ 侧一律 "believed/plausibly post-quantum"（STARK 哈希型、Akita Module-SIS 均无 QROM 归约闭环）；Winterfell 数字旁标注工程演示参数边界（64 位域）。
 3. §6/§7 表格新增「PQ 外壳实测」小节：三路线三等级并列（实测/实测/厂商自报）。
@@ -112,3 +115,31 @@ sh recompile-o2.sh       # 内核 -O2 重编（断点续传，已完成件自动
 ./segprove ./out/program.bin verify1  ./segs   # 单段 verify 实测
 ./segprove ./out/program.bin assemble ./segs ./out  # 242 段齐后组装 composite receipt
 ```
+
+## 7. 主机全量复跑（2026-10-05）—— 论文 Table 10 数据源
+
+**取代 §3.3 投影口径**：O2 同构铁律下的全量实测（单会话、零续跑、exit 0、journal 对账通过）。
+
+- **环境**（声明配置入批日志头）：20 核 / 12 GiB 声明（WSL2 `.wslconfig` 冻结）；实机 = 单台 16 GB 消费级笔记本（i7-13650HX）。内核 = 三包 C++ 全 `-O2` 重编（本机版 `recompile-o2.sh`，验收对象 7/8/23 全过）；**guest ELF 不变**（sha256 `e086acf4…`）——cycles/段数语义不变：50,865,966 cycles 与沙盒逐位复现。
+- **管线**（`full.rs`）：全 execute → 108 段逐段 prove（逐项 checkpoint）→ lift ×108 → join 树 ×107 → 最终 succinct receipt + `Receipt::new(inner, journal).verify(image_id)` 全覆盖校验；journal 与 host 期望公开输入对账 `journal_ok=true`。
+- **shard 定案**：po2=19（108 段），按"稳定配置下峰值 ≤70% 预算"规则（4.59 GiB / 11 GiB ≈ 42%）。
+
+| 指标 | 实测值（主批） | 对照（旧口径） |
+|---|---|---|
+| execute | 736 ms | |
+| user / total cycles | 50,865,966 / 56,623,104 | 与沙盒逐位同 |
+| 段 prove ×108 | **median 41.4 s**（38.2–46.5） | O0 4c 525 s/段 → ≈12.9× |
+| 段 verify ×108 | mean 12.3 ms（11–14） | 23.3 ms（po2=18 沙盒） |
+| lift ×108 | median 7.1 s | O0 67 s |
+| join ×107 | median 7.4 s | |
+| 段 receipt | 268,066 B（末段 268,182 B = Halted 出口态 +116 B） | po2=18: 255,842 B |
+| 最终 receipt | **223,270 B**（succinct；整树常数级） | 投影 60.4 MiB（作废） |
+| final verify | **11.5 ms**（full `Receipt::verify`；integrity-only 14.0 ms 进日志不进表） | 投影 5.6 s（作废） |
+| 峰值内存 | 4.59 GiB（≤70% 规则 ✓） | O0 4c: 4.58 GiB |
+| **端到端 wall** | **99.87 min** | 投影 22.4 h |
+| 算账互锁 | 4433.5 + 761.9 + 794.0 + 1.3 + 0.7 s = 5991.5 s ≈ 99.86 min ≡ wall 99.87 ✓ | |
+
+- **+116 B 变体自洽**：段 107（末段）载 Halted 出口态 → 其 lift 及 join 路径 5 节点（r0-53→r1-26→[r2 进位]→r3-6→[r4 进位]→r5-1→r6-0 根）逐位对应树结构。
+- **归档**：`measurements/raw/zkvm-full-v1-{run.log,run.rss,timing.csv,report.txt,meta.txt,final.bin}` + `zkvm-o2-recompile.log`；`SHA256SUMS` **52/52 OK**；final.bin sha256 `b4f9fbbf…ce9a3`。
+- **复现**：`sh run-full.sh 19 ../rsep-guest.elf`（三级 checkpoint 断点续跑；`meta.txt` 同构守卫——po2/段数/image_id/journal 摘要不匹配即拒跑）。
+- **论文状态**：收割 E1–E8 全量落地（摘要 / §3 / Table 10 两行+环境列 / tab:axes / 附录 C / Open Science）；**全文最后一个 "projected" 标签入土**；编译 32 页、0 undefined、1 预存 overfull（tab:scope 3pt，非本批）。
