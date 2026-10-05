@@ -1,0 +1,11 @@
+# E3 delta calibration sweep (drift_at=2700, high drift coverage; scored x1/x2 means from agent_trail drift mode)
+delta_rate=0.05  x1_scored: mean=0.1592 std=1.1037 x2_scored: mean=-0.2144 std=0.9536 
+delta_rate=0.075  x1_scored: mean=0.3904 std=1.1270 x2_scored: mean=-0.1780 std=0.9327 
+delta_rate=0.1  x1_scored: mean=0.6147 std=1.0820 x2_scored: mean=-0.2314 std=0.8653 
+delta_rate=0.125  x1_scored: mean=0.8485 std=1.1716 x2_scored: mean=-0.2703 std=0.9590 
+delta_rate=0.14  x1_scored: mean=0.9830 std=1.1497 x2_scored: mean=-0.3465 std=0.8614 
+delta_rate=0.15  x1_scored: mean=1.0679 std=1.1505 x2_scored: mean=-0.3127 std=0.9031 
+delta_rate=0.2  x1_scored: mean=1.5309 std=1.1475 x2_scored: mean=-0.4116 std=0.8106 
+# type-only drift (delta_rate=0, drift_type=1; mix weight 0.5)
+x1_scored: mean=-0.3001 std=1.1854
+x2_scored: mean=5.3725 std=2.8372
