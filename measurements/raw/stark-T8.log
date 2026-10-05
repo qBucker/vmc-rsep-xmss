@@ -1,0 +1,11 @@
+=== Winterfell STARK 审计链演示（工程演示参数，非安全参数集）===
+语句: C_t = P([C_{t-1}, B_t, DS])[0], T = 8 块, Poseidon-f64 (t=3, a=7, 8+57 轮)
+迹: 3 列 x 1024 行（块 128 行 = 65 轮 + 输出行 + idle）
+C_0 = 0x0000000000000000
+C_T = 0xe7e2d26ad57a62e2 (trace 0.022 ms)
+--- 实测（2 核沙盒） ---
+prove   : 11.9 ms
+verify  : 0.341 ms
+proof   : 42084 bytes (41.1 KiB)
+verifier: MinConjecturedSecurity(95) 通过
+输出: out/wf-audit-proof.bin, out/wf-bench.txt
