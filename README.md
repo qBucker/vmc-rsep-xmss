@@ -1,11 +1,139 @@
 # RSEP-XMSS
 
+> **Reference**: J. Zhu, *Monotone Accountability: A Foundation for
+> Verifiable Records and Epoch Transitions* (preprint; the concept DOI
+> always points to the latest version:
+> <https://doi.org/10.5281/zenodo.22987527>).
+>
+> **参考**：J. Zhu, *Monotone Accountability: A Foundation for Verifiable
+> Records and Epoch Transitions*（预印本；概念 DOI 始终指向最新版：
+> <https://doi.org/10.5281/zenodo.22987527>）。
+
+## Overview
+
+A production-oriented implementation of verifiable monotone chains (VMC),
+instantiated as an XMSS stateful hash-based signature whose every signature
+carries a Groth16 zero-knowledge proof that the signer's leaf state advances
+strictly monotonically along the chain `FRESH ≺ USED ≺ SPENT`. The verifier
+does not trust the signer's local state management; it checks the proof
+against its own pinned `(cur_root, last_counter)`.
+
+## Quick start
+
+```rust
+use rsep_xmss::poseidon::PoseidonParams;
+use rsep_xmss::rsep::{self, VerifierState, Verdict};
+use rsep_xmss::wots::WOTS_N;
+use rand_chacha::{ChaCha20Rng, rand_core::SeedableRng};
+
+let poseidon = PoseidonParams::derive(b"my-app");
+let mut rng = ChaCha20Rng::seed_from_u64(42);
+
+// 1. key generation (h = 2, 4 leaves, demo)
+let (public, mut secret) = rsep::keygen(&poseidon, 2, &mut rng)?;
+
+// 2. sign
+let msg = [0x42u8; WOTS_N];
+let sig = rsep::sign(&public, &mut secret, &msg, 0, &mut rng)?;
+
+// 3. verify
+let mut verifier = VerifierState::init(&public);
+assert_eq!(verifier.verify_signature(&public, &msg, &sig)?, Verdict::Accept);
+```
+
+## Layout
+
+| module | role |
+|---|---|
+| `field` | BN254 scalar field Fr (via ark-bn254) |
+| `poseidon` | out-of-field Poseidon permutation and parameter derivation |
+| `adrs` | 32-byte ADRS of RFC 8391 §2.5 |
+| `wots` | WOTS+ one-time signatures (with L-tree) |
+| `xmss` | XMSS core signing (single-layer Merkle tree) |
+| `circuit` | R1CS circuits: Poseidon / Merkle / comparator / RSEP |
+| `proof` | Groth16 wrapper (ark-groth16) |
+| `rsep` | high-level API: keygen / sign / finalize / VerifierState |
+
+## Correspondence with the paper
+
+| paper element | implementation |
+|---|---|
+| §3 Syntax | `rsep::{keygen, sign, finalize, VerifierState}` |
+| §3 Security notions | root + counter pinning in `VerifierState` |
+| §3 Definition 1 / Theorem 1 | public root history (needs external ledger anchoring) |
+| §3 Instantiation + Appendix C | `circuit::rsep::RsepCircuit` |
+| Appendix C, gate-level circuit | `circuit::comparator::StrictOrderGadget` |
+| Appendix C (transplant argument) | `circuit::merkle_gadget::MerklePathGadget` |
+| §3 (strong termination) | `tests::full_lifecycle_exhausts_tree` |
+| §12 Table 6 + Table 10 | `benches/rsep.rs` |
+
+## Constraint counts
+
+This implementation's Poseidon `hash2` costs **276** R1CS constraints
+(243 analytic: 81 S-boxes × 3, i.e., 8 full × 3 + 57 partial × 1; plus
+**33** linear-combination-collapse statements, 3 per fold × 11 folds; the
+output-binding variant costs 277). At `h = 10` the measured total is
+**5,586** constraints:
+
+| component | count |
+|---|---|
+| 2 × h × 276 (two Merkle paths, incl. LC folds) | 5,520 |
+| Merkle direction multiplexing (2 per level × two paths) | 40 |
+| index-bit decomposition + booleanity | 11 |
+| leaf-state bit decomposition × 2 | 6 |
+| order comparator + result binding | 4 |
+| constant checks (v_old / v_new) | 2 |
+| counter linear constraint | 1 |
+| root binding | 2 |
+| **total** | **5,586** |
+
+Authoritative measurement: the `constraint_count_at_h10` test in
+`circuit/rsep.rs`.
+
+## Reproducibility artifacts
+
+- `statistics/` — CUSUM Monte Carlo reproduction package (`cusum_mc.py`,
+  `verify.py`, reference output; regenerates the paper's Appendix B tables
+  cell by cell — see its README).
+- `measurements/` — raw measurement logs with `SHA256SUMS` (Groth16
+  scaling v4/v6, Winterfell STARK T-sweep, SLH-DSA E1, agent-trail E3).
+- `rsep-pq-shell/` — post-quantum proof-shell artifact tree: the Winterfell
+  audit-chain prover (`wf-audit`), the RISC Zero zkVM host/guest sources,
+  and rerun evidence (see its README).
+
+## Security boundaries
+
+Read `SECURITY.md`. Key points:
+
+- The Groth16 setup in this implementation uses single-party random
+  parameters; production deployments must replace it with an MPC-ceremony
+  output.
+- Poseidon constants are Blake2b-derived, not the canonical Grain LFSR.
+- `VerifierState`'s `(cur_root, last_counter)` must be protected by the
+  verifier itself (e.g., anchored to an external ledger); this crate does
+  not persist them.
+- The signer's state updates (counter, tree) must be atomic and monotone.
+
+## Build and test
+
+```bash
+cargo build --release
+cargo test --release
+cargo bench
+```
+
+Requires Rust 1.75+.
+
+## License
+
+MIT OR Apache-2.0.
+
+---
+
+# 中文版
+
 可验证单调链（VMC）的生产级实现，实例化为带状态生命周期证明的
 XMSS 有状态哈希签名。
-
-> **参考**：J. Zhu, *Monotone Accountability: A Foundation for
-> Verifiable Records and Epoch Transitions*（预印本；概念 DOI 始终指向
-> 最新版：<https://doi.org/10.5281/zenodo.22987527>）。
 
 ## 概述
 
@@ -37,7 +165,7 @@ let mut verifier = VerifierState::init(&public);
 assert_eq!(verifier.verify_signature(&public, &msg, &sig)?, Verdict::Accept);
 ```
 
-结构
+## 结构
 
 模块 职责
 field BN254 标量域 Fr（经 ark-bn254）
@@ -49,7 +177,7 @@ circuit R1CS 电路：Poseidon / Merkle / 比较器 / RSEP
 proof Groth16 封装（ark-groth16）
 rsep 高层 API：keygen / sign / finalize / VerifierState
 
-与论文的对应
+## 与论文的对应
 
 论文元素 实现位置
 §3 Syntax rsep::{keygen, sign, finalize, VerifierState}
@@ -61,7 +189,7 @@ Appendix C（transplant 论证） circuit::merkle_gadget::MerklePathGadget
 §3（strong termination） tests::full_lifecycle_exhausts_tree
 §12 Table 6 + Table 10 benches/rsep.rs
 
-约束计数
+## 约束计数
 
 本实现的 Poseidon `hash2` 基础约束为 **243 条** R1CS 乘法约束
 （81 个 S-box × 3；8 full × 3 + 57 partial × 1），另加 **33 条**
@@ -97,7 +225,17 @@ LC 折叠开销（防止部分轮线性组合指数膨胀导致 prover OOM 的
 本 crate 的论文引用一律以论文正文 PDF 为准；早期文档中曾出现
 不存在的章节引用（「§7.2」），已在审计后清除。
 
-安全边界
+## 复现产物
+
+- `statistics/` — CUSUM 蒙特卡洛复现包（`cusum_mc.py`、`verify.py`、
+  参考输出；逐格复现论文附录 B 表格，见其 README）。
+- `measurements/` — 原始测量日志 + `SHA256SUMS`（Groth16 scaling
+  v4/v6、Winterfell STARK T 扫描、SLH-DSA E1、agent-trail E3）。
+- `rsep-pq-shell/` — 后量子证明外壳 artifact 树：Winterfell 审计链
+  prover（`wf-audit`）、RISC Zero zkVM host/guest 源码与复跑证据
+  （见其 README）。
+
+## 安全边界
 
 必读 SECURITY.md。要点：
 
@@ -105,10 +243,10 @@ LC 折叠开销（防止部分轮线性组合指数膨胀导致 prover OOM 的
 替换为 MPC 仪式产物。
 · Poseidon 常量使用 Blake2b 派生，非规范 Grain-LFSR。
 · VerifierState 的 (cur_root, last_counter) 必须由验证器
-  自己保护（如锚定外部账本）；本 crate 不做持久化。
+自己保护（如锚定外部账本）；本 crate 不做持久化。
 · 签名者的状态更新（counter、tree）必须原子且单调。
 
-编译与测试
+## 编译与测试
 
 ```bash
 cargo build --release
@@ -118,7 +256,6 @@ cargo bench
 
 要求 Rust 1.75+。
 
-许可证
+## 许可证
 
 MIT OR Apache-2.0。
-
