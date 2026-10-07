@@ -349,11 +349,11 @@ mod tests {
         //       = 2h × 276 + 5h + 16
         let expected = 2 * h * 276 + 5 * h + 16;
         assert_eq!(n, expected, "got {}, expected {}", n, expected);
-        // 对照论文 §6 Table 2（按 300 条/hash2 上界估值 ~6,041）；
-        // 单次 hash2 实测 276–277 条，仍落在论文 §6 正文所述
-        // 240–300 区间内，且总量低于 Table 2 上界估值。
+        // 对照论文附录 C 的 Table 11（逐行同口径清单，合计 5,586）；
+        // 单次 hash2 实测 276–277 条，论文 §12.2 按 Model-M 口径
+        // 276 条/hash2 计价。
         eprintln!(
-            "RsepCircuit h={} constraints = {} (paper §6 Table 2 upper-bound ≈ 6,041)",
+            "RsepCircuit h={} constraints = {} (matches the paper's Appendix C, Table 11)",
             h, n
         );
     }

@@ -65,7 +65,9 @@ assert_eq!(verifier.verify_signature(&public, &msg, &sig)?, Verdict::Accept);
 | Appendix C, gate-level circuit | `circuit::comparator::StrictOrderGadget` |
 | Appendix C (transplant argument) | `circuit::merkle_gadget::MerklePathGadget` |
 | §3 (strong termination) | `tests::full_lifecycle_exhausts_tree` |
-| §12 Table 6 + Table 10 | `benches/rsep.rs` |
+| §12 Table 6 (A/B rows) | `examples/baseline.rs` |
+| §12 Table 10 | `examples/measure.rs`; `rsep-pq-shell/` |
+| §12 prover micro-benchmarks | `benches/rsep.rs` |
 
 ## Constraint counts
 
@@ -187,7 +189,9 @@ rsep 高层 API：keygen / sign / finalize / VerifierState
 Appendix C, gate-level circuit circuit::comparator::StrictOrderGadget
 Appendix C（transplant 论证） circuit::merkle_gadget::MerklePathGadget
 §3（strong termination） tests::full_lifecycle_exhausts_tree
-§12 Table 6 + Table 10 benches/rsep.rs
+§12 Table 6 examples/baseline.rs
+§12 Table 10 examples/measure.rs；rsep-pq-shell/
+§12 prover 微基准 benches/rsep.rs
 
 ## 约束计数
 
@@ -196,9 +200,9 @@ Appendix C（transplant 论证） circuit::merkle_gadget::MerklePathGadget
 LC 折叠开销（防止部分轮线性组合指数膨胀导致 prover OOM 的
 结构性修复，每次折叠 3 条，共 11 次；详见 VERIFICATION.md
 第四波记录），实测 **276 条/hash2**（`hash2_lc` 口径，输出绑定
-版 `hash2` 为 277 条）。论文附录 C 给出的成本区间为
-**240–300 条/hash2**（取决于参数化与域）；本实现含折叠开销
-后仍落在区间内，论文附录 C 按上界 300 估值。
+版 `hash2` 为 277 条）。论文 §12.2 以 Model-M 口径按
+**276 条/hash2** 计价，附录 C 的 Table 11 给出与本实现
+逐行一致的清单（合计 5,586）。
 
 `h = 10` 时本实现的实测约束数为 **5,586 条**：
 
@@ -214,11 +218,10 @@ LC 折叠开销（防止部分轮线性组合指数膨胀导致 prover OOM 的
 | Root 绑定 | 2 |
 | **合计** | **5,586** |
 
-论文附录 C 按每 hash2 成本上界 300 估值得到 ~6,041 条；
-本实现的 5,586 低于该上界估值。差异来源：本实现的 Poseidon
-成本为 276/hash2（低于估值上界 300）、计数器用线性约束而非
-位分解；Table 2 未单列索引布尔性，本实现单列 11 条
-（h booleanity + 1 重构）。
+更早的完整版曾按每 hash2 上界 300 估值得到 ~6,041 条；CiC 版
+改以实测清单为准（Poseidon 276/hash2，合计 5,586）。计数器用
+线性约束而非位分解；附录 C 的 Table 11 与本实现逐行对齐
+（含索引布尔性 11 条）。
 
 实测以 `circuit/rsep.rs` 的 `constraint_count_at_h10` 测试为准。
 
