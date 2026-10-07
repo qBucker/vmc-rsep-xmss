@@ -1,7 +1,7 @@
-# Reproduction Artifact — CUSUM Trigger Monte Carlo (Tables 6 and 7)
+# Reproduction Artifact — CUSUM Trigger Monte Carlo (Appendix B)
 
 This package reproduces, with a single command, every Monte Carlo number
-reported in the paper *Monotone Accountability: A New Foundation for
+reported in the paper *Monotone Accountability: A Foundation for
 Verifiable Records and Epoch Transitions* (Appendix B, Tables
 `tab:mc-far` and `tab:mc-delay`, and the condensed Table in
 Section "The Statistical Layer").
@@ -60,7 +60,8 @@ $24.8$ steps at $\rho = 0$.
 
 This artifact covers the **statistical layer only**. The circuit constraint
 counts (e.g., 5586 R1CS constraints for the audit relation) and the
-STARK/zkVM timings (e.g., 56.2 KiB proofs, 197.6 ms proving) were measured
+STARK/zkVM timings (e.g., 56.3 KiB proofs, 35.8 ms proving at the
+canonical operating point) were measured
 with the Rust harness in the companion engineering repository
 (`github.com/qBucker/vmc-rsep-xmss`); reproducing them requires the
 toolchains pinned there (arkworks 0.4, Winterfell 0.13.1, RISC Zero 3.0.6)
