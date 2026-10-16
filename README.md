@@ -26,7 +26,7 @@ use rsep_xmss::rsep::{self, VerifierState, Verdict};
 use rsep_xmss::wots::WOTS_N;
 use rand_chacha::{ChaCha20Rng, rand_core::SeedableRng};
 
-let poseidon = PoseidonParams::derive(b"my-app");
+let poseidon = PoseidonParams::derive(b"example-app");
 let mut rng = ChaCha20Rng::seed_from_u64(42);
 
 // 1. key generation (h = 2, 4 leaves, demo)
@@ -152,7 +152,7 @@ use rsep_xmss::rsep::{self, VerifierState, Verdict};
 use rsep_xmss::wots::WOTS_N;
 use rand_chacha::{ChaCha20Rng, rand_core::SeedableRng};
 
-let poseidon = PoseidonParams::derive(b"my-app");
+let poseidon = PoseidonParams::derive(b"example-app");
 let mut rng = ChaCha20Rng::seed_from_u64(42);
 
 // 1. 密钥生成（h = 2，4 叶子，演示用）

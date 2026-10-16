@@ -192,9 +192,9 @@ fn main() {
             .output = MaybePruned::Value(Some(output));
 
         // CompositeReceipt 是 #[non_exhaustive]（protos 转换模块私有），
-        // 无法字面量构造。骨架法：以 session_limit 截断的 1-2 段迷你 session
+        // 无法字面量构造。分两步构造：以 session_limit 截断的 1-2 段短 session
         // 走官方 prove_session 得真 CompositeReceipt 实例（~10s），
-        // 再整体替换其 segments 字段为我们的 242 段真实 receipts。
+        // 再整体替换其 segments 字段为 242 段真实 receipts。
         let env_skel = ExecutorEnv::builder()
             .write_slice(&words)
             .segment_limit_po2(18)
