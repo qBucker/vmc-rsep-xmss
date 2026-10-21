@@ -3,11 +3,11 @@
 > **Reference**: J. Zhu, *Monotone Accountability: A Foundation for
 > Verifiable Records and Epoch Transitions* (preprint; the concept DOI
 > always points to the latest version:
-> <https://doi.org/10.5281/zenodo.22987527>).
+> <https://doi.org/10.5281/zenodo.21888909>).
 >
 > **参考**：J. Zhu, *Monotone Accountability: A Foundation for Verifiable
 > Records and Epoch Transitions*（预印本；概念 DOI 始终指向最新版：
-> <https://doi.org/10.5281/zenodo.22987527>）。
+> <https://doi.org/10.5281/zenodo.21888909>）。
 
 ## Overview
 
